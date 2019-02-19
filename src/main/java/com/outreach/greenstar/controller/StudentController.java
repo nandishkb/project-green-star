@@ -56,6 +56,7 @@ public class StudentController {
     
     @PutMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO student) {
-        return new ResponseEntity(null, HttpStatus.OK);
+        StudentDTO newStudent = studentService.updateStudent(student);
+        return new ResponseEntity<>(newStudent, HttpStatus.OK);
     }
 }

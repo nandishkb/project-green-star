@@ -2,6 +2,7 @@ package com.outreach.greenstar.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,33 +15,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.outreach.greenstar.dto.GroupDTO;
+import com.outreach.greenstar.service.GroupService;
 
 @RestController
 @RequestMapping("/api/v1/group")
 public class GroupController {
 
+    @Autowired
+    private GroupService groupService;
+    
     @GetMapping(value="/section/{sectionId}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<GroupDTO>> getGroupsBySection(@PathVariable int sectionId) {
-        return new ResponseEntity(null, HttpStatus.OK);
+        List<GroupDTO> listOfGroups = groupService.getGroupsBySection(sectionId);
+        return new ResponseEntity<>(listOfGroups, HttpStatus.OK);
     }
     
     @GetMapping(value="/class/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<GroupDTO>> getGroupsByClass(@PathVariable int classId) {
-        return new ResponseEntity(null, HttpStatus.OK);
+        List<GroupDTO> listOfGroups = groupService.getGroupsByClass(classId);
+        return new ResponseEntity<>(listOfGroups, HttpStatus.OK);
     }
     
     @GetMapping(value="/{groupId}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> getGroup(@PathVariable int groupId) {
-        return new ResponseEntity((GroupDTO)null, HttpStatus.OK);
+        GroupDTO group = groupService.getGroup(groupId);
+        return new ResponseEntity<>(group, HttpStatus.OK);
     }
     
     @PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupDTO group) {
-        return new ResponseEntity(null, HttpStatus.OK);
+        GroupDTO newGroup = groupService.createGroup(group);
+        return new ResponseEntity<>(newGroup, HttpStatus.OK);
     }
     
     @PutMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> updateGroup(@RequestBody GroupDTO group) {
-        return new ResponseEntity(null, HttpStatus.OK);
+        GroupDTO newGroup = groupService.updateGroup(group);
+        return new ResponseEntity<>(newGroup, HttpStatus.OK);
     }
 }
