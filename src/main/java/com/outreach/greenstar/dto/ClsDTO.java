@@ -1,5 +1,10 @@
 package com.outreach.greenstar.dto;
 
-public class ClsDTO {
+import lombok.Data;
 
+@Data
+public class ClsDTO {
+    private int id;
+    private int grade;
+    private int schoolId;
 }

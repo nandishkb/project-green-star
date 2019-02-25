@@ -39,4 +39,9 @@ public class StudentService {
         return null;
     }
 
+    public StudentDTO getStudent(int studentId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

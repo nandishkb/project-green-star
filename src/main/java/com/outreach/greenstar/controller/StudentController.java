@@ -48,6 +48,12 @@ public class StudentController {
         return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
     
+    @GetMapping(value="{studentId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StudentDTO> getStudent(@PathVariable int studentId) {
+        StudentDTO student = studentService.getStudent(studentId);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+    
     @PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO student) {
         StudentDTO newStudent = studentService.createStudent(student);
