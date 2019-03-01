@@ -23,7 +23,7 @@ public class PerformanceService {
         Group group = groupDao.getGroupById(groupId);
         PerformanceParamDTO perfDTO =
             performanceDao.getPerformanceByGroup(group, fromDate, toDate);
-        return null;
+        return perfDTO;
     }
 
     public PerformanceParamDTO getPerformanceByClass(int classId, Date fromDate,
