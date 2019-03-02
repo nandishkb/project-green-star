@@ -2,17 +2,20 @@ package com.outreach.greenstar.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "student_table")
 public class Student {
 
     @Id
@@ -38,20 +41,16 @@ public class Student {
     @Column
     private Date joiningDate;
     
-    @Column
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private School school;
     
-    @Column
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Cls cls;
     
-    @Column
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Section section;
     
-    @Column
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Group group;
     
 }

@@ -1,4 +1,4 @@
-package com.outreach.greenstar.config;
+/*package com.outreach.greenstar.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,4 +25,4 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.csrf().disable().headers().frameOptions().disable();
 	}
 
-}
+}*/

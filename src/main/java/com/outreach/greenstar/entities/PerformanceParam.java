@@ -2,12 +2,13 @@ package com.outreach.greenstar.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -32,19 +33,15 @@ public class PerformanceParam {
     @Column(name="discipline")
     private boolean isDisciplined;
     
-    @Column
-    @ManyToMany
+    @ManyToOne(cascade=CascadeType.ALL)
     private Student student;
     
-    @Column
-    @ManyToMany
+    @ManyToOne(cascade=CascadeType.ALL)
     private Cls cls;
     
-    @Column
-    @ManyToMany
+    @ManyToOne(cascade=CascadeType.ALL)
     private Section section;
     
-    @Column
-    @ManyToMany
+    @ManyToOne(cascade=CascadeType.ALL)
     private Group group;
 }
