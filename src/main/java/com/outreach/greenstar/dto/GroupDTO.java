@@ -9,4 +9,6 @@ public class GroupDTO {
     private String name;
     private int size;
     private int sectionId;
+    private int classId;
+    private String sectionName;
 }

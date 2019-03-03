@@ -42,15 +42,20 @@ public class GroupController {
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
     
+    @GetMapping(value="/school/{schoolId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<GroupDTO>> getGroupsBySchool(@PathVariable int schoolId) {
+        List<GroupDTO> listOfGroups = groupService.getGroupsBySchool(schoolId);
+        return new ResponseEntity<>(listOfGroups, HttpStatus.OK);
+    }
+    
     @PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupDTO group) {
-        GroupDTO newGroup = groupService.createGroup(group);
+        GroupDTO newGroup = groupService.createOrUpdateGroup(group);
         return new ResponseEntity<>(newGroup, HttpStatus.OK);
     }
     
     @PutMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> updateGroup(@RequestBody GroupDTO group) {
-        GroupDTO newGroup = groupService.updateGroup(group);
-        return new ResponseEntity<>(newGroup, HttpStatus.OK);
+        return createGroup(group);
     }
 }

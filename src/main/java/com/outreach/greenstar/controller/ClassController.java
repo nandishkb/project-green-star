@@ -31,8 +31,8 @@ public class ClassController {
     }
     
     @GetMapping(value="/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClsDTO> getClass(@PathVariable int classId) {
-        ClsDTO cls = classService.getClass(classId);
+    public ResponseEntity<ClsDTO> getClassById(@PathVariable int classId) {
+        ClsDTO cls = classService.getClassById(classId);
         return new ResponseEntity<>(cls, HttpStatus.OK);
     }
     

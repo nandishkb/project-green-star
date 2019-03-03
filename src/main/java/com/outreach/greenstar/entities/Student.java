@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -29,8 +30,8 @@ public class Student {
     @Column(nullable=false)
     private String name;
     
-    @Column
-    private String address;
+    @OneToOne(cascade=CascadeType.ALL)
+    private Address address;
     
     @Column
     private String caste;

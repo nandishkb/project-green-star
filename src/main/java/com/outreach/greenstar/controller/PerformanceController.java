@@ -1,5 +1,7 @@
 package com.outreach.greenstar.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,27 @@ public class PerformanceController {
     @Autowired
     private PerformanceService performanceService;
     
+    @GetMapping(value="/welcome")
+    public ResponseEntity<String> welcomePerformance() {
+        System.out.println("PerformanceController.welcomePerformance() Welcome");
+        return new ResponseEntity<String>("successful", HttpStatus.OK);
+    }
+    
     @GetMapping(value = "/group/{groupId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PerformanceParamDTO> getPerformanceByGroup(
-        @PathVariable int groupId, @RequestParam Date fromDate,
-        @RequestParam Date toDate) {
-        PerformanceParamDTO perParam = performanceService.getPerformanceByGroup(groupId, fromDate, toDate);
+        @PathVariable int groupId, @RequestParam String fromDate,
+        @RequestParam String toDate) {
+        System.out.println("PerformanceController.getPerformanceByGroup()");
+        Date from = null;
+        Date to = null;
+        try {
+            from = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+            to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("Invalid date format");
+        }
+        PerformanceParamDTO perParam = performanceService.getPerformanceByGroup(groupId, from, to);
         return new ResponseEntity<>(perParam, HttpStatus.OK);
 
     }

@@ -1,20 +1,18 @@
 package com.outreach.greenstar.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "group_table")
-public class Group {
+@Table(name="address_table")
+public class Address {
 
     @Id
     @Column
@@ -22,17 +20,11 @@ public class Group {
     private int id;
     
     @Column
-    private String name;
+    private String city;
     
     @Column
-    private int size;
+    private int pincode;
     
-    @ManyToOne(cascade=CascadeType.ALL)
-    private Section section;
-    
-    @ManyToOne(cascade=CascadeType.ALL)
-    private Cls cls;
-    
-    @ManyToOne(cascade=CascadeType.ALL)
-    private School school;
+    @Column
+    private String address;
 }
