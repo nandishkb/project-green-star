@@ -1,6 +1,8 @@
 package com.outreach.greenstar.utility;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,6 +15,10 @@ import com.outreach.greenstar.entities.PerformanceParam;
 
 public final class EntityDtoConverter {
 
+    private static final String[] columnHeader = {
+            "date", "rollNum", "name", "isHoliday", "attendance", "homework", "discipline", "groupName"
+    };
+    
     private EntityDtoConverter() {
 
     }
@@ -53,6 +59,7 @@ public final class EntityDtoConverter {
     public static PerformanceParamDTO getPerformanceParamDTO(
         List<PerformanceParam> listOfPerf) {
         PerformanceParamDTO perfDTO = new PerformanceParamDTO();
+        perfDTO.setColumnHeaders(Arrays.asList(columnHeader));
         List<List<String>> performanceData = new ArrayList<>();
         for (Iterator<PerformanceParam> iterator = listOfPerf.iterator(); iterator.hasNext();) {
             PerformanceParam perfParam = (PerformanceParam) iterator.next();
@@ -60,7 +67,13 @@ public final class EntityDtoConverter {
             listOfData.add(perfParam.getDate().toString());//Date
             listOfData.add(perfParam.getStudent().getRollNumber() + "");//Rollnumber
             listOfData.add(perfParam.getStudent().getName());//Name
-            listOfData.add("true");//isWorkingDay
+            SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
+            String dayOfWeek = simpleDateformat.format(perfParam.getDate());
+            String holiday = "false";
+            if ("Sunday".equalsIgnoreCase(dayOfWeek) || "Saturday".equalsIgnoreCase(dayOfWeek)) {
+                holiday = "true";
+            }
+            listOfData.add(holiday);//isHoliday
             listOfData.add(perfParam.isPresent() + "");//Attendance
             listOfData.add(perfParam.isHWDone() + "");//Homework
             listOfData.add(perfParam.isDisciplined() + "");//Discipline

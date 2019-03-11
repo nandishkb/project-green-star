@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
 import com.outreach.greenstar.repository.PerformanceRepository;
 
@@ -32,12 +31,15 @@ public class PerformanceDao {
         return listOfperf;
     }*/
     
-    public List<PerformanceParam> getPerformanceByGroup(Group group, Date fromDate,
+    public List<PerformanceParam> getPerformanceByGroup(int groupId, Date fromDate,
         Date toDate) {
-//        System.out.format("PerformanceDao.getPerformanceByGroup() ID = %d, from %s , to = %s"+group.getId(), fromDate, toDate);
-        System.out.println("PerformanceDao.getPerformanceByGroup() id == "+group.getId()+" === fromDate === "+fromDate+" === todate === "+toDate);
-        List<PerformanceParam> listOfPerf = perfRepo.findbyGroupAndDateBetween(group.getId(), fromDate, toDate, Sort.by("date"));
-        System.out.println("PerformanceDao.getPerformanceByGroup() list = "+listOfPerf.size());
+        List<PerformanceParam> listOfPerf = perfRepo.findbyGroupAndDateBetween(groupId, fromDate, toDate, Sort.by("date"));
+        return  listOfPerf;
+    }
+
+    public List<PerformanceParam> getPerformanceByStudent(int studentId,
+        Date fromDate, Date toDate) {
+        List<PerformanceParam> listOfPerf = perfRepo.findbyGroupAndDateBetween(studentId, fromDate, toDate, Sort.by("date"));
         return  listOfPerf;
     }
 

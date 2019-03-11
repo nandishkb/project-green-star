@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
 
 public interface PerformanceRepository
@@ -28,4 +27,7 @@ public interface PerformanceRepository
 //    @Query("select p from PerformanceParam p where p.group.id=$1 and p.date between $2 and $3")
     @Query("select p from PerformanceParam p where p.group.id=:id and p.date between :from and :to")
     public List<PerformanceParam> findbyGroupAndDateBetween(int id, Date from, Date to, Sort sort);
+    
+    @Query("select p from PerformanceParam p where p.student.id=:id and p.date between :from and :to")
+    public List<PerformanceParam> findByStudentAndDateBetween(int id, Date from, Date to, Sort sort);
 }

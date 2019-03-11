@@ -51,6 +51,26 @@ public class PerformanceController {
 
     }
     
+    @GetMapping(value = "/student/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PerformanceParamDTO> getPerformanceByStudent(
+        @PathVariable int studentId, @RequestParam String fromDate,
+        @RequestParam String toDate) {
+        System.out.println("PerformanceController.getPerformanceByStudent()");
+        Date from = null;
+        Date to = null;
+        try {
+            from = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+            to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("Invalid date format");
+        }
+        PerformanceParamDTO perParam = performanceService.getPerformanceByStudent(studentId, from, to);
+        return new ResponseEntity<>(perParam, HttpStatus.OK);
+
+    }
+    
+    
     @GetMapping(value = "/class/{classId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PerformanceParamDTO> getPerformanceByClass(
         @PathVariable int classId, @RequestParam Date fromDate,

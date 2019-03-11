@@ -10,7 +10,7 @@ public class PerformanceParamDTO {
 
     private Date fromDate;
     private Date toDate;
-    
+    private List<String> columnHeaders;
     private List<List<String>> performanceData;
     
 }

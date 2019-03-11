@@ -1,6 +1,5 @@
 package com.outreach.greenstar.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.PerformanceDao;
-import com.outreach.greenstar.dto.GroupDTO;
+import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
+import com.outreach.greenstar.entities.Student;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("performanceService")
@@ -22,12 +22,18 @@ public class PerformanceService {
     private PerformanceDao performanceDao;
     @Autowired
     private GroupDao       groupDao;
+    
+    @Autowired
+    private StudentDao studentDao;
 
     public PerformanceParamDTO getPerformanceByGroup(int groupId, Date fromDate,
         Date toDate) {
         Group group = groupDao.getGroupById(groupId);
+        if (group == null) {
+            throw new IllegalArgumentException("Invalid group id = "+groupId);
+        }
         List<PerformanceParam> perfList =
-            performanceDao.getPerformanceByGroup(group, fromDate, toDate);
+            performanceDao.getPerformanceByGroup(groupId, fromDate, toDate);
         PerformanceParamDTO pdto =
             EntityDtoConverter.getPerformanceParamDTO(perfList);
         pdto.setFromDate(fromDate);
@@ -35,6 +41,21 @@ public class PerformanceService {
         return pdto;
     }
 
+    public PerformanceParamDTO getPerformanceByStudent(int studentId, Date fromDate,
+        Date toDate) {
+        Student student = studentDao.getStudentById(studentId);
+        if (student == null) {
+            throw new IllegalArgumentException("Invalid Student ID = "+studentId);
+        }
+        List<PerformanceParam> perfList =
+            performanceDao.getPerformanceByStudent(studentId, fromDate, toDate);
+        PerformanceParamDTO pdto =
+            EntityDtoConverter.getPerformanceParamDTO(perfList);
+        pdto.setFromDate(fromDate);
+        pdto.setToDate(toDate);
+        return pdto;
+    }
+    
     public PerformanceParamDTO getPerformanceByClass(int classId, Date fromDate,
         Date toDate) {
         // TODO Auto-generated method stub
@@ -51,5 +72,6 @@ public class PerformanceService {
         // TODO Auto-generated method stub
 
     }
+
 
 }
