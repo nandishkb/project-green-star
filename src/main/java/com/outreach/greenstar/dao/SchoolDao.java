@@ -1,5 +1,7 @@
 package com.outreach.greenstar.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,14 @@ public class SchoolDao {
     
     public School getSchoolById(int schoolId) {
         return schoolRepository.getOne(schoolId);
+    }
+
+    public List<School> getAllSchools() {
+        return schoolRepository.findAll();
+    }
+
+    public School createOrUpdateSchool(School school) {
+        return schoolRepository.saveAndFlush(school);
     }
 
 }

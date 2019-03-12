@@ -2,7 +2,7 @@ package com.outreach.greenstar.dao;
 
 import org.springframework.stereotype.Repository;
 
-@Repository("holidayRepository")
+@Repository("holidayDao")
 public class HolidayDao {
 
 }
