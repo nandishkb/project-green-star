@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,10 +49,10 @@ public class Student {
     @ManyToOne(cascade=CascadeType.ALL)
     private Cls cls;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(optional=true, cascade=CascadeType.ALL)
     private Section section;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(optional=true, fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private Group group;
     
 }

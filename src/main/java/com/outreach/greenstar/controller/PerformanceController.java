@@ -44,7 +44,7 @@ public class PerformanceController {
             to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Invalid date format");
+            throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM-dd");
         }
         PerformanceParamDTO perParam = performanceService.getPerformanceByGroup(groupId, from, to);
         return new ResponseEntity<>(perParam, HttpStatus.OK);
