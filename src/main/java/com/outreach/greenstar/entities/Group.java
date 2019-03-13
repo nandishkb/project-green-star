@@ -27,7 +27,7 @@ public class Group {
     @Column
     private int size;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(optional=true, cascade=CascadeType.ALL)
     private Section section;
     
     @ManyToOne(cascade=CascadeType.ALL)

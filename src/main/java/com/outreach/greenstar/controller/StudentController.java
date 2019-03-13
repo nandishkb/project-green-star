@@ -36,9 +36,21 @@ public class StudentController {
         return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
     
+    @GetMapping(value="/section/no-group/{secId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<StudentDTO>> getAvailableStudentsBySection(@PathVariable int secId) {
+        List<StudentDTO> studentList = studentService.getAvailableStudentsBySection(secId);
+        return new ResponseEntity<>(studentList, HttpStatus.OK);
+    }
+    
     @GetMapping(value="/class/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<StudentDTO>> getStudentsByClass(@PathVariable int classId) {
         List<StudentDTO> studentList = studentService.getStudentsByClass(classId);
+        return new ResponseEntity<>(studentList, HttpStatus.OK);
+    }
+    
+    @GetMapping(value="/class/no-group/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<StudentDTO>> getAvailableStudentsByClass(@PathVariable int classId) {
+        List<StudentDTO> studentList = studentService.getAvailableStudentsByClass(classId);
         return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
     

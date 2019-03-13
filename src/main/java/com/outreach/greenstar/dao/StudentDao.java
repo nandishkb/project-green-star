@@ -49,11 +49,27 @@ public class StudentDao {
         }
         throw new IllegalArgumentException("Invalid Section ID = "+secId);
     }
+    
+    public List<Student> getAvailableStudentsBySection(int secId) {
+        Section section = sectionDao.getSectionById(secId);
+        if (section != null) {
+            return studentRepository.findBySectionAndGroupIsNull(section);
+        }
+        throw new IllegalArgumentException("Invalid Section ID = "+secId);
+    }
 
     public List<Student> getStudentsByClass(int classId) {
         Cls cls = classDao.getClassById(classId);
         if (cls != null) {
             return studentRepository.findByCls(cls);
+        }
+        throw new IllegalArgumentException("Invalid Class ID = "+classId);
+    }
+    
+    public List<Student> getAvailableStudentsByClass(int classId) {
+        Cls cls = classDao.getClassById(classId);
+        if (cls != null) {
+            return studentRepository.findByClsAndGroupIsNull(cls);
         }
         throw new IllegalArgumentException("Invalid Class ID = "+classId);
     }

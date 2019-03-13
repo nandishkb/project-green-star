@@ -130,7 +130,12 @@ public final class EntityDtoConverter {
         studentDTO.setAddress(student.getAddress());
         studentDTO.setCaste(student.getCaste());
         studentDTO.setClsId(student.getCls().getId());
-        studentDTO.setGroupId(student.getGroup().getId());
+        Group group = student.getGroup();
+        if (group != null) {
+            studentDTO.setGroupId(group.getId());
+        } else {
+            studentDTO.setGroupId(-1);
+        }
         studentDTO.setId(student.getId());
         String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(student.getJoiningDate());
         studentDTO.setJoiningDate(formattedDate);

@@ -54,9 +54,27 @@ public class StudentService {
         }
         return listOfStudentsDTO;
     }
+    
+    public List<StudentDTO> getAvailableStudentsBySection(int secId) {
+        List<Student> listOfStudent = studentDao.getAvailableStudentsBySection(secId);
+        List<StudentDTO> listOfStudentsDTO = new ArrayList<>();
+        for (int i = 0 ; i < listOfStudent.size() ; ++i) {
+            listOfStudentsDTO.add(EntityDtoConverter.getStudentDTO(listOfStudent.get(i)));
+        }
+        return listOfStudentsDTO;
+    }
 
     public List<StudentDTO> getStudentsByClass(int classId) {
         List<Student> listOfStudent = studentDao.getStudentsByClass(classId);
+        List<StudentDTO> listOfStudentsDTO = new ArrayList<>();
+        for (int i = 0 ; i < listOfStudent.size() ; ++i) {
+            listOfStudentsDTO.add(EntityDtoConverter.getStudentDTO(listOfStudent.get(i)));
+        }
+        return listOfStudentsDTO;
+    }
+    
+    public List<StudentDTO> getAvailableStudentsByClass(int classId) {
+        List<Student> listOfStudent = studentDao.getAvailableStudentsByClass(classId);
         List<StudentDTO> listOfStudentsDTO = new ArrayList<>();
         for (int i = 0 ; i < listOfStudent.size() ; ++i) {
             listOfStudentsDTO.add(EntityDtoConverter.getStudentDTO(listOfStudent.get(i)));
@@ -110,5 +128,7 @@ public class StudentService {
         Student student = studentDao.getStudentById(studentId);
         return EntityDtoConverter.getStudentDTO(student);
     }
+
+    
 
 }

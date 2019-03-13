@@ -1,6 +1,7 @@
 package com.outreach.greenstar.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Service;
 import com.outreach.greenstar.dao.ClassDao;
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.SectionDao;
+import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.GroupDTO;
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.Section;
+import com.outreach.greenstar.entities.Student;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("groupService")
@@ -26,6 +29,9 @@ public class GroupService {
     
     @Autowired
     private ClassDao classDao;
+    
+    @Autowired
+    private StudentDao studentDao;
     
 
     public List<GroupDTO> getGroupsBySection(int sectionId) {
@@ -65,6 +71,17 @@ public class GroupService {
         }
         grp.setSection(section);
         Group newGroup = groupDao.createOrUpdateGroup(grp);
+        // Update group to students
+        List<Integer> studentIds = groupDto.getStudentIds();
+        if (studentIds != null) {
+            for (Iterator<Integer> iterator = studentIds.iterator(); iterator
+                .hasNext();) {
+                int studentId = iterator.next();
+                Student student = studentDao.getStudentById(studentId);
+                student.setGroup(newGroup);
+                studentDao.createOrUpdateStudent(student);
+            }
+        }
         return EntityDtoConverter.getGroupDto(newGroup);
     }
 

@@ -1,8 +1,6 @@
 package com.outreach.greenstar.dto;
 import java.util.Date;
 
-import javax.persistence.Entity;
-
 import lombok.Data;
 
 @Data
