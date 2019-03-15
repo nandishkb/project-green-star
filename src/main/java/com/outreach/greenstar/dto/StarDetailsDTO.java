@@ -1,6 +1,5 @@
 package com.outreach.greenstar.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -9,7 +8,7 @@ import lombok.Data;
 public class StarDetailsDTO {
 
     int numberOfDays;
-    Date month;
+    String month;
     List<String> attendanceDetails;
     List<String> homeWorkDetails;
     List<String> desciplineDetails;

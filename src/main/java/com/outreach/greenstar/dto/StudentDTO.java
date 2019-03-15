@@ -19,6 +19,8 @@ public class StudentDTO {
     
     private String religion;
     
+    private String gender;
+    
     private String joiningDate;
     
     private int schoolId;

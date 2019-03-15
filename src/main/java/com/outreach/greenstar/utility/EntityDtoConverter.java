@@ -10,12 +10,14 @@ import java.util.List;
 
 import com.outreach.greenstar.dto.ClsDTO;
 import com.outreach.greenstar.dto.GroupDTO;
+import com.outreach.greenstar.dto.HolidayDTO;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
 import com.outreach.greenstar.dto.SchoolDTO;
 import com.outreach.greenstar.dto.SectionDTO;
 import com.outreach.greenstar.dto.StudentDTO;
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
+import com.outreach.greenstar.entities.Holiday;
 import com.outreach.greenstar.entities.PerformanceParam;
 import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Section;
@@ -163,6 +165,30 @@ public final class EntityDtoConverter {
         student.setReligion(sDto.getReligion());
         student.setRollNumber(sDto.getRollNumber());
         return student;
+    }
+
+    public static HolidayDTO getHolidayDTO(Holiday holiday) {
+        HolidayDTO holidayDto = new HolidayDTO();
+        holidayDto.setDate(holiday.getDate().toString());
+        holidayDto.setDetails(holiday.getDetails());
+        holidayDto.setId(holiday.getId());
+        holidayDto.setPublicHoliday(holiday.isPublicHoliday());
+        return holidayDto;
+    }
+
+    public static Holiday getHoliday(HolidayDTO holidayDTO) {
+        Holiday holiday = new Holiday();
+        Date date;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(holidayDTO.getDate());
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Invalid date format in Holiday Entity. Expected format is yyyy-MM--dd");
+        }
+        holiday.setDate(date);
+        holiday.setDetails(holidayDTO.getDetails());
+        holiday.setId(holidayDTO.getId());
+        holiday.setPublicHoliday(holidayDTO.isPublicHoliday());
+        return holiday;
     }
 
     

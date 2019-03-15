@@ -41,6 +41,9 @@ public class Student {
     private String religion;
     
     @Column
+    private String gender;
+    
+    @Column
     private Date joiningDate;
     
     @ManyToOne(cascade=CascadeType.ALL)

@@ -7,7 +7,8 @@ import lombok.Data;
 public class HolidayDTO {
 
     private int id;
-    private Date date;
+    private String date;
     private String details;
+    private boolean isPublicHoliday;
     
 }

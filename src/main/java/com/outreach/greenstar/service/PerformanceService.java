@@ -36,8 +36,8 @@ public class PerformanceService {
             performanceDao.getPerformanceByGroup(groupId, fromDate, toDate);
         PerformanceParamDTO pdto =
             EntityDtoConverter.getPerformanceParamDTO(perfList);
-        pdto.setFromDate(fromDate);
-        pdto.setToDate(toDate);
+        pdto.setFromDate(fromDate.toString());
+        pdto.setToDate(toDate.toString());
         return pdto;
     }
 
@@ -51,8 +51,8 @@ public class PerformanceService {
             performanceDao.getPerformanceByStudent(studentId, fromDate, toDate);
         PerformanceParamDTO pdto =
             EntityDtoConverter.getPerformanceParamDTO(perfList);
-        pdto.setFromDate(fromDate);
-        pdto.setToDate(toDate);
+        pdto.setFromDate(fromDate.toString());
+        pdto.setToDate(toDate.toString());
         return pdto;
     }
     

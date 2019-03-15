@@ -47,7 +47,7 @@ public class StarService {
     private StarDetailsDTO calculateStarDetailsForStudent(
         List<PerformanceParam> perfList, Date monthYear) {
         StarDetailsDTO starDetailsDTO = new StarDetailsDTO();
-        starDetailsDTO.setMonth(monthYear);
+        starDetailsDTO.setMonth(monthYear.toString());
         int daysInMonth = getNumberOfDaysInMonth(monthYear);
         starDetailsDTO.setNumberOfDays(daysInMonth);
         starDetailsDTO.setAttendanceDetails(

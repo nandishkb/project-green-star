@@ -19,10 +19,13 @@ public class Holiday {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    @Column
+    @Column(nullable=false, unique=true)
     private Date date;
     
     @Column
     private String details;
+    
+    @Column
+    private boolean isPublicHoliday;
     
 }
