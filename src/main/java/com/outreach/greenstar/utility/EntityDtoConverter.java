@@ -47,6 +47,8 @@ public final class EntityDtoConverter {
         schoolDto.setId(school.getId());
         schoolDto.setMaxClassGrade(school.getMaxClassGrade());
         schoolDto.setName(school.getName());
+        schoolDto.setCity(school.getCity());
+        schoolDto.setPincode(school.getPincode());
         return schoolDto;
     }
     
@@ -64,6 +66,8 @@ public final class EntityDtoConverter {
         school.setId(schoolDto.getId());
         school.setMaxClassGrade(schoolDto.getMaxClassGrade());
         school.setName(schoolDto.getName());
+        school.setCity(schoolDto.getCity());
+        school.setPincode(schoolDto.getPincode());
         return school;
     }
 
@@ -146,6 +150,8 @@ public final class EntityDtoConverter {
         studentDTO.setRollNumber(student.getRollNumber());
         studentDTO.setSchoolId(student.getSchool().getId());
         studentDTO.setSectionId(student.getSection().getId());
+        studentDTO.setCity(student.getCity());
+        studentDTO.setPincode(student.getPincode());
         return studentDTO;
     }
     
@@ -164,6 +170,8 @@ public final class EntityDtoConverter {
         student.setName(sDto.getName());
         student.setReligion(sDto.getReligion());
         student.setRollNumber(sDto.getRollNumber());
+        student.setCity(sDto.getCity());
+        student.setPincode(sDto.getPincode());
         return student;
     }
 

@@ -31,9 +31,6 @@ public class Student {
     @Column(nullable=false)
     private String name;
     
-    @OneToOne(cascade=CascadeType.ALL)
-    private Address address;
-    
     @Column
     private String caste;
     
@@ -57,5 +54,14 @@ public class Student {
     
     @ManyToOne(optional=true, fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private Group group;
+    
+    @Column
+    private String city;
+    
+    @Column
+    private int pincode;
+    
+    @Column
+    private String address;
     
 }

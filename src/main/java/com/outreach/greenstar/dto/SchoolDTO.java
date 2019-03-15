@@ -1,7 +1,5 @@
 package com.outreach.greenstar.dto;
 
-import com.outreach.greenstar.entities.Address;
-
 import lombok.Data;
 
 @Data
@@ -13,5 +11,9 @@ public class SchoolDTO {
 
     private int     maxClassGrade;
 
-    private Address address;
+    private String city;
+    
+    private int pincode;
+    
+    private String address;
 }
