@@ -21,7 +21,11 @@ public class SectionDao {
     private ClassRepository classRepository;
     
     public Section getSectionById(int sectionId) {
-        return sectionRepository.getOne(sectionId);
+        Optional<Section> sectionOp = sectionRepository.findById(sectionId);
+        if (sectionOp.isPresent()) {
+            return sectionOp.get();
+        }
+        throw new IllegalArgumentException("Invalid section id = "+sectionId);
     }
 
     public List<Section> getSectionsByClass(int classId) {

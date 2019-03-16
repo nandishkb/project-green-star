@@ -34,6 +34,9 @@ public class SectionService {
 
     public SectionDTO getSection(int sectionId) {
         Section section = sectionDao.getSectionById(sectionId);
+        if (section == null) {
+            throw new IllegalArgumentException("Invalid Section Id = "+sectionId);
+        }
         return EntityDtoConverter.getSectionDTO(section);
     }
 
