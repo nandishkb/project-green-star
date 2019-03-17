@@ -40,20 +40,13 @@ public class ClassService {
     public ClsDTO createClass(ClsDTO clsDto) {
         Cls cls = EntityDtoConverter.getCls(clsDto);
         School school = schoolDao.getSchoolById(clsDto.getSchoolId());
-        if (school == null) {
-            throw new IllegalArgumentException("Class should be associated with School. Invalid School Id");
-        }
         cls.setSchool(school);
         Cls cls1 = classDao.createOrUpdateClass(cls);
         return EntityDtoConverter.getClsDTO(cls1);
     }
 
     public ClsDTO updateClass(ClsDTO clsDto) {
-        Cls cls = EntityDtoConverter.getCls(clsDto);
-        School school = schoolDao.getSchoolById(clsDto.getSchoolId());
-        cls.setSchool(school);
-        Cls cls1 = classDao.createOrUpdateClass(cls);
-        return EntityDtoConverter.getClsDTO(cls1);
+        return createClass(clsDto);
     }
 
 }

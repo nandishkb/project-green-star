@@ -66,13 +66,13 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
     
-    @PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO student) {
         StudentDTO newStudent = studentService.createStudent(student);
         return new ResponseEntity<>(newStudent, HttpStatus.OK);
     }
     
-    @PutMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO student) {
         StudentDTO newStudent = studentService.updateStudent(student);
         return new ResponseEntity<>(newStudent, HttpStatus.OK);

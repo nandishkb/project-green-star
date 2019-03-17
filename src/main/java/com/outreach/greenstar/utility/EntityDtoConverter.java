@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.ClsDTO;
 import com.outreach.greenstar.dto.GroupDTO;
 import com.outreach.greenstar.dto.HolidayDTO;
@@ -86,12 +87,23 @@ public final class EntityDtoConverter {
         return section;
     }
 
-    public static GroupDTO getGroupDto(Group group) {
+    public static GroupDTO getGroupDto(Group group, StudentDao studentDao) {
         GroupDTO groupDto = new GroupDTO();
         groupDto.setId(group.getId());
         groupDto.setName(group.getName());
         groupDto.setSectionId(group.getSection().getId());
         groupDto.setSectionName(group.getSection().getName());
+        List<Student> studentsByGroup = studentDao.getStudentsByGroup(group.getId());
+        List<Integer> studentIds = new ArrayList<>();
+        List<String> studentNames = new ArrayList<>();
+        for (Iterator<Student> iterator = studentsByGroup.iterator(); iterator
+            .hasNext();) {
+            Student student = iterator.next();
+            studentIds.add(student.getId());
+            studentNames.add(student.getName());
+        }
+        groupDto.setStudentIds(studentIds);
+        groupDto.setStudentNames(studentNames);
         return groupDto;
     }
 
