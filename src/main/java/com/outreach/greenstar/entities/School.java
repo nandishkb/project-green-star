@@ -27,7 +27,13 @@ public class School {
     @Column
     private int maxClassGrade;
     
-    @OneToOne(cascade=CascadeType.ALL)
-    private Address address;
+    @Column
+    private String city;
+    
+    @Column
+    private int pincode;
+    
+    @Column
+    private String address;
     
 }

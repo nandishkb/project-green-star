@@ -37,13 +37,13 @@ public class SectionController {
         return new ResponseEntity<>(section, HttpStatus.OK);
     }
     
-    @PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SectionDTO> createSection(@RequestBody SectionDTO section) {
         SectionDTO newSection = sectionService.createSection(section);
         return new ResponseEntity<>(newSection, HttpStatus.OK);
     }
     
-    @PutMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SectionDTO> updateSection(@RequestBody SectionDTO section) {
         SectionDTO newSection = sectionService.updateSection(section);
         return new ResponseEntity<>(newSection, HttpStatus.OK);

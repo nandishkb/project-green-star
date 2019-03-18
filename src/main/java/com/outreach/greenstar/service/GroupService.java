@@ -16,6 +16,8 @@ import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
+import com.outreach.greenstar.exeption.ClsNotFoundException;
+import com.outreach.greenstar.exeption.SectionNotFoundException;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("groupService")
@@ -38,7 +40,7 @@ public class GroupService {
         List<Group> listOfGroup = groupDao.getGroupBySection(sectionId);
         List<GroupDTO> listOfGroupDTOs = new ArrayList<>();
         for (int i = 0; i < listOfGroup.size(); ++i) {
-            listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i)));
+            listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i), studentDao));
         }
         return listOfGroupDTOs;
     }
@@ -47,14 +49,14 @@ public class GroupService {
         List<Group> listOfGroup = groupDao.getGroupByClass(classId);
         List<GroupDTO> listOfGroupDTOs = new ArrayList<>();
         for (int i = 0; i < listOfGroup.size(); ++i) {
-            listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i)));
+            listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i), studentDao));
         }
         return listOfGroupDTOs;
     }
 
     public GroupDTO getGroup(int groupId) {
         Group group = groupDao.getGroupById(groupId);
-        return EntityDtoConverter.getGroupDto(group);
+        return EntityDtoConverter.getGroupDto(group, studentDao);
     }
 
     public GroupDTO createOrUpdateGroup(GroupDTO groupDto) {
@@ -62,12 +64,12 @@ public class GroupService {
         Group grp = EntityDtoConverter.getGroup(groupDto);
         Cls cls = classDao.getClassById(groupDto.getClassId());
         if (cls == null) {
-            throw new IllegalArgumentException("Group should be associated with Class. Invalid Class Id");
+            throw new ClsNotFoundException("Group should be associated with Class. Invalid Class Id");
         }
         grp.setCls(cls);
         Section section = sectionDao.getSectionById(groupDto.getSectionId());
         if (section == null) {
-            throw new IllegalArgumentException("Group should be associated with Section. Invalid Section Id");
+            throw new SectionNotFoundException("Group should be associated with Section. Invalid Section Id");
         }
         grp.setSection(section);
         Group newGroup = groupDao.createOrUpdateGroup(grp);
@@ -82,14 +84,14 @@ public class GroupService {
                 studentDao.createOrUpdateStudent(student);
             }
         }
-        return EntityDtoConverter.getGroupDto(newGroup);
+        return EntityDtoConverter.getGroupDto(newGroup, studentDao);
     }
 
     public List<GroupDTO> getGroupsBySchool(int schoolId) {
         List<Group> listOfGroup = groupDao.getGroupBySchool(schoolId);
         List<GroupDTO> listOfGroupDTOs = new ArrayList<>();
         for (int i = 0; i < listOfGroup.size(); ++i) {
-            listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i)));
+            listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i), studentDao));
         }
         return listOfGroupDTOs;
     }

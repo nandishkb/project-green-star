@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Section;
+import com.outreach.greenstar.exeption.ClsNotFoundException;
+import com.outreach.greenstar.exeption.SectionNotFoundException;
 import com.outreach.greenstar.repository.ClassRepository;
 import com.outreach.greenstar.repository.SectionRepository;
 
@@ -21,7 +23,11 @@ public class SectionDao {
     private ClassRepository classRepository;
     
     public Section getSectionById(int sectionId) {
-        return sectionRepository.getOne(sectionId);
+        Optional<Section> sectionOp = sectionRepository.findById(sectionId);
+        if (sectionOp.isPresent()) {
+            return sectionOp.get();
+        }
+        throw new SectionNotFoundException("Invalid section id = "+sectionId);
     }
 
     public List<Section> getSectionsByClass(int classId) {
@@ -29,7 +35,7 @@ public class SectionDao {
         if (clsOpt.isPresent()) {
             return sectionRepository.findByCls(clsOpt.get());
         }
-        throw new IllegalArgumentException("Invalid class id = "+classId);
+        throw new ClsNotFoundException("Invalid class id = "+classId);
     }
 
     public Section saveOrUpdate(Section section) {

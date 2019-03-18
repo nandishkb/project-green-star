@@ -1,6 +1,6 @@
 package com.outreach.greenstar.dto;
 
-import com.outreach.greenstar.entities.Address;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -9,9 +9,14 @@ public class SchoolDTO {
 
     private int     id;
 
+    @JsonProperty("label")
     private String  name;
 
     private int     maxClassGrade;
 
-    private Address address;
+    private String city;
+    
+    private int pincode;
+    
+    private String address;
 }

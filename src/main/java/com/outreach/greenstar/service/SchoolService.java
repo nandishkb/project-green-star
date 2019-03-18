@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.outreach.greenstar.dao.SchoolDao;
 import com.outreach.greenstar.dto.SchoolDTO;
 import com.outreach.greenstar.entities.School;
+import com.outreach.greenstar.exeption.SchoolNotFoundException;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("schoolService")
@@ -32,7 +33,7 @@ public class SchoolService {
     public SchoolDTO getSchool(int schoolId) {
         School school = schoolDao.getSchoolById(schoolId);
         if (school == null) {
-            throw new IllegalArgumentException("Invalid School Id = "+schoolId);
+            throw new SchoolNotFoundException("Invalid School Id = "+schoolId);
         }
         return EntityDtoConverter.getSchoolDTO(school);
     }

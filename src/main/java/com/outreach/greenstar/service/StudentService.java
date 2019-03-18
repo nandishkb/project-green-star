@@ -17,6 +17,10 @@ import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
+import com.outreach.greenstar.exeption.ClsNotFoundException;
+import com.outreach.greenstar.exeption.GroupNotFoundException;
+import com.outreach.greenstar.exeption.SchoolNotFoundException;
+import com.outreach.greenstar.exeption.SectionNotFoundException;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("studentService")
@@ -95,21 +99,21 @@ public class StudentService {
         Student student = EntityDtoConverter.getStudent(studentDto);
         School school = schoolDao.getSchoolById(studentDto.getSchoolId());
         if (school == null) {
-            throw new IllegalArgumentException("Invalid School Id = "+studentDto.getSchoolId());
+            throw new SchoolNotFoundException("Invalid School Id = "+studentDto.getSchoolId());
         }
         Cls cls = classDao.getClassById(studentDto.getClsId());
         if (cls == null) {
-            throw new IllegalArgumentException("Invalid Class Id = "+studentDto.getClsId());
+            throw new ClsNotFoundException("Invalid Class Id = "+studentDto.getClsId());
         }
         
         Section section = sectionDao.getSectionById(studentDto.getSectionId());
         if (section == null) {
-            throw new IllegalArgumentException("Invalid section Id = "+studentDto.getSectionId());
+            throw new SectionNotFoundException("Invalid section Id = "+studentDto.getSectionId());
         }
         
         Group group = groupDao.getGroupById(studentDto.getGroupId());
         if (group == null) {
-            throw new IllegalArgumentException("Invalid group Id = "+studentDto.getGroupId());
+            throw new GroupNotFoundException("Invalid group Id = "+studentDto.getGroupId());
         }
         
         student.setSchool(school);

@@ -14,6 +14,7 @@ import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.StarDetailsDTO;
 import com.outreach.greenstar.entities.PerformanceParam;
 import com.outreach.greenstar.entities.Student;
+import com.outreach.greenstar.exeption.StudentNotFoundException;
 import com.outreach.greenstar.utility.ColorEnum;
 
 @Service("starService")
@@ -32,7 +33,7 @@ public class StarService {
         Date monthYear) {
         Student student = studentDao.getStudentById(studentId);
         if (student == null) {
-            throw new IllegalArgumentException(
+            throw new StudentNotFoundException(
                 "Invalid Student ID = " + studentId);
         }
         Date fromDate = getStartDateOfMonth(monthYear);

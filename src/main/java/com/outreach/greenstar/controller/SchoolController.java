@@ -24,7 +24,7 @@ public class SchoolController {
     @Autowired
     private SchoolService schoolService;
     
-    @GetMapping(value="/", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SchoolDTO>> getSchools() {
         List<SchoolDTO> listOfSchools = schoolService.getAllSchools(); 
         return new ResponseEntity<>(listOfSchools, HttpStatus.OK);
@@ -36,13 +36,13 @@ public class SchoolController {
         return new ResponseEntity<>(school, HttpStatus.OK);
     }
     
-    @PostMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SchoolDTO> createSchool(@RequestBody SchoolDTO school) {
         SchoolDTO newSchool = schoolService.createSchool(school);
         return new ResponseEntity<>(newSchool, HttpStatus.OK);
     }
     
-    @PutMapping(value="/", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<SchoolDTO> updateSchool(@RequestBody SchoolDTO school) {
         SchoolDTO updatedSchool = schoolService.updateSchool(school);
         return new ResponseEntity<>(updatedSchool, HttpStatus.OK);

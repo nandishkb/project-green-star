@@ -10,6 +10,10 @@ import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
+import com.outreach.greenstar.exeption.ClsNotFoundException;
+import com.outreach.greenstar.exeption.GroupNotFoundException;
+import com.outreach.greenstar.exeption.SchoolNotFoundException;
+import com.outreach.greenstar.exeption.SectionNotFoundException;
 import com.outreach.greenstar.repository.StudentRepository;
 
 @Repository("studentDao")
@@ -39,7 +43,7 @@ public class StudentDao {
         if (group != null) {
             return studentRepository.findByGroup(group);
         }
-        throw new IllegalArgumentException("Invalid Group ID = "+groupId);
+        throw new GroupNotFoundException("Invalid Group ID = "+groupId);
     }
 
     public List<Student> getStudentsBySection(int secId) {
@@ -47,7 +51,7 @@ public class StudentDao {
         if (section != null) {
             return studentRepository.findBySection(section);
         }
-        throw new IllegalArgumentException("Invalid Section ID = "+secId);
+        throw new SectionNotFoundException("Invalid Section ID = "+secId);
     }
     
     public List<Student> getAvailableStudentsBySection(int secId) {
@@ -55,7 +59,7 @@ public class StudentDao {
         if (section != null) {
             return studentRepository.findBySectionAndGroupIsNull(section);
         }
-        throw new IllegalArgumentException("Invalid Section ID = "+secId);
+        throw new SectionNotFoundException("Invalid Section ID = "+secId);
     }
 
     public List<Student> getStudentsByClass(int classId) {
@@ -63,7 +67,7 @@ public class StudentDao {
         if (cls != null) {
             return studentRepository.findByCls(cls);
         }
-        throw new IllegalArgumentException("Invalid Class ID = "+classId);
+        throw new ClsNotFoundException("Invalid Class ID = "+classId);
     }
     
     public List<Student> getAvailableStudentsByClass(int classId) {
@@ -71,7 +75,7 @@ public class StudentDao {
         if (cls != null) {
             return studentRepository.findByClsAndGroupIsNull(cls);
         }
-        throw new IllegalArgumentException("Invalid Class ID = "+classId);
+        throw new ClsNotFoundException("Invalid Class ID = "+classId);
     }
 
     public List<Student> getStudentsBySchool(int schoolId) {
@@ -79,7 +83,7 @@ public class StudentDao {
         if (school != null) {
             return studentRepository.findBySchool(school);
         }
-        throw new IllegalArgumentException("Invalid School ID = "+schoolId);
+        throw new SchoolNotFoundException("Invalid School ID = "+schoolId);
     }
 
     public Student createOrUpdateStudent(Student student) {

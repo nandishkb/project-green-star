@@ -11,6 +11,8 @@ import com.outreach.greenstar.dao.SectionDao;
 import com.outreach.greenstar.dto.SectionDTO;
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Section;
+import com.outreach.greenstar.exeption.ClsNotFoundException;
+import com.outreach.greenstar.exeption.SectionNotFoundException;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("sectionService")
@@ -34,6 +36,9 @@ public class SectionService {
 
     public SectionDTO getSection(int sectionId) {
         Section section = sectionDao.getSectionById(sectionId);
+        if (section == null) {
+            throw new SectionNotFoundException("Invalid Section Id = "+sectionId);
+        }
         return EntityDtoConverter.getSectionDTO(section);
     }
 
@@ -41,7 +46,7 @@ public class SectionService {
         Section section = EntityDtoConverter.getSection(sectionDTO);
         Cls cls = classDao.getClassById(sectionDTO.getClassId());
         if (cls == null) {
-            throw new IllegalArgumentException("Invalid Class ID = "+sectionDTO.getClassId());
+            throw new ClsNotFoundException("Invalid Class ID = "+sectionDTO.getClassId());
         }
         section.setCls(cls);
         section = sectionDao.saveOrUpdate(section);

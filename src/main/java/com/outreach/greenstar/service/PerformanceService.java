@@ -13,6 +13,8 @@ import com.outreach.greenstar.dto.PerformanceParamDTO;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
 import com.outreach.greenstar.entities.Student;
+import com.outreach.greenstar.exeption.GroupNotFoundException;
+import com.outreach.greenstar.exeption.StudentNotFoundException;
 import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("performanceService")
@@ -30,7 +32,7 @@ public class PerformanceService {
         Date toDate) {
         Group group = groupDao.getGroupById(groupId);
         if (group == null) {
-            throw new IllegalArgumentException("Invalid group id = "+groupId);
+            throw new GroupNotFoundException("Invalid group id = "+groupId);
         }
         List<PerformanceParam> perfList =
             performanceDao.getPerformanceByGroup(groupId, fromDate, toDate);
@@ -45,7 +47,7 @@ public class PerformanceService {
         Date toDate) {
         Student student = studentDao.getStudentById(studentId);
         if (student == null) {
-            throw new IllegalArgumentException("Invalid Student ID = "+studentId);
+            throw new StudentNotFoundException("Invalid Student ID = "+studentId);
         }
         List<PerformanceParam> perfList =
             performanceDao.getPerformanceByStudent(studentId, fromDate, toDate);

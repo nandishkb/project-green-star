@@ -43,7 +43,6 @@ public class PerformanceController {
             from = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
             to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
         } catch (ParseException e) {
-            e.printStackTrace();
             throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM-dd");
         }
         PerformanceParamDTO perParam = performanceService.getPerformanceByGroup(groupId, from, to);
@@ -63,7 +62,7 @@ public class PerformanceController {
             to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
         } catch (ParseException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Invalid date format");
+            throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM-dd");
         }
         PerformanceParamDTO perParam = performanceService.getPerformanceByStudent(studentId, from, to);
         return new ResponseEntity<>(perParam, HttpStatus.OK);
@@ -87,7 +86,7 @@ public class PerformanceController {
         return new ResponseEntity<>(perParam, HttpStatus.OK);
     }
     
-    @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updatePerformance(@RequestBody PerformanceParamDTO param) {
         performanceService.updatePerformanceParam(param);
         return new ResponseEntity<String>("Update successful", HttpStatus.OK);
