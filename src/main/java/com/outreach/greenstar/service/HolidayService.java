@@ -35,7 +35,7 @@ public class HolidayService {
         return successHolidays;
     }
 
-    public HolidayDTO createHolidays(HolidayDTO holidayDto) {
+    public HolidayDTO createHoliday(HolidayDTO holidayDto) {
         Holiday holiday = EntityDtoConverter.getHoliday(holidayDto);
         holiday = holidayDao.createHoliday(holiday);
         return EntityDtoConverter.getHolidayDTO(holiday);

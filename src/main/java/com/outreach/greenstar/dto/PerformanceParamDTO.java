@@ -1,6 +1,5 @@
 package com.outreach.greenstar.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;

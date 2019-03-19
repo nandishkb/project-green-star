@@ -37,8 +37,14 @@ public class HolidayController {
     }
     
     @PostMapping(path="/new", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HolidayDTO> createHolidays(@RequestBody HolidayDTO holiday) {
-        HolidayDTO holDTO = holidayService.createHolidays(holiday);
+    public ResponseEntity<HolidayDTO> createHoliday(@RequestBody HolidayDTO holiday) {
+        HolidayDTO holDTO = holidayService.createHoliday(holiday);
+        return new ResponseEntity<>(holDTO, HttpStatus.CREATED);
+    }
+    
+    @PostMapping(path="/update", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HolidayDTO> updateHoliday(@RequestBody HolidayDTO holiday) {
+        HolidayDTO holDTO = holidayService.createHoliday(holiday);
         return new ResponseEntity<>(holDTO, HttpStatus.CREATED);
     }
     

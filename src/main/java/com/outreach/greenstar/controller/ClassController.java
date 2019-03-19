@@ -36,13 +36,13 @@ public class ClassController {
         return new ResponseEntity<>(cls, HttpStatus.OK);
     }
     
-    @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClsDTO> createClass(@RequestBody ClsDTO cls) {
         ClsDTO newCls = classService.createClass(cls);
         return new ResponseEntity<>(newCls, HttpStatus.OK);
     }
     
-    @PutMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClsDTO> updateClass(@RequestBody ClsDTO cls) {
         ClsDTO updatedCls = classService.updateClass(cls);
         return new ResponseEntity<>(updatedCls, HttpStatus.OK);

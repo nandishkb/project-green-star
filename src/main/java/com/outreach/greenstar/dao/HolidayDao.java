@@ -25,7 +25,7 @@ public class HolidayDao {
     }
 
     public List<Holiday> createHolidays(List<Holiday> listOfHolidays) {
-        for (Iterator iterator = listOfHolidays.iterator(); iterator
+        for (Iterator<Holiday> iterator = listOfHolidays.iterator(); iterator
             .hasNext();) {
             Holiday holiday = (Holiday) iterator.next();
             List<Holiday> storedHolidayList = holidayRepository.findByDate(holiday.getDate());

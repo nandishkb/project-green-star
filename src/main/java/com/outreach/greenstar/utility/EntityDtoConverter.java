@@ -8,11 +8,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.ClsDTO;
 import com.outreach.greenstar.dto.GroupDTO;
 import com.outreach.greenstar.dto.HolidayDTO;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
+import com.outreach.greenstar.dto.RoleDTO;
 import com.outreach.greenstar.dto.SchoolDTO;
 import com.outreach.greenstar.dto.SectionDTO;
 import com.outreach.greenstar.dto.StudentDTO;
@@ -20,15 +23,21 @@ import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.Holiday;
 import com.outreach.greenstar.entities.PerformanceParam;
+import com.outreach.greenstar.entities.Privilages;
+import com.outreach.greenstar.entities.Role;
 import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
+import com.outreach.greenstar.repository.PrivilagesRepository;
 
 public final class EntityDtoConverter {
 
     private static final String[] columnHeader = {
             "date", "rollNum", "name", "isHoliday", "attendance", "homework", "discipline", "groupName"
     };
+    
+    @Autowired
+    private static PrivilagesRepository privilagesRepository;
     
     private EntityDtoConverter() {
 
@@ -123,7 +132,7 @@ public final class EntityDtoConverter {
         for (Iterator<PerformanceParam> iterator = listOfPerf.iterator(); iterator.hasNext();) {
             PerformanceParam perfParam = (PerformanceParam) iterator.next();
             ArrayList<String> listOfData = new ArrayList<>();
-            listOfData.add(perfParam.getDate().toString());//Date
+            listOfData.add(Constants.DATE_FORMAT_YYYY_MM_DD.format(perfParam.getDate()));//Date
             listOfData.add(perfParam.getStudent().getRollNumber() + "");//Rollnumber
             listOfData.add(perfParam.getStudent().getName());//Name
             SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
@@ -155,7 +164,7 @@ public final class EntityDtoConverter {
             studentDTO.setGroupId(-1);
         }
         studentDTO.setId(student.getId());
-        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(student.getJoiningDate());
+        String formattedDate = Constants.DATE_FORMAT_YYYY_MM_DD.format(student.getJoiningDate());
         studentDTO.setJoiningDate(formattedDate);
         studentDTO.setName(student.getName());
         studentDTO.setReligion(student.getReligion());
@@ -174,7 +183,7 @@ public final class EntityDtoConverter {
         student.setId(sDto.getId());
         Date joining = new Date();
         try {
-            joining = new SimpleDateFormat("yyyy-MM-dd").parse(sDto.getJoiningDate());
+            joining = Constants.DATE_FORMAT_YYYY_MM_DD.parse(sDto.getJoiningDate());
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format for Joining date. Correct Format = yyyy-MM-dd. Ex : 2018-06-01");
         }
@@ -189,7 +198,7 @@ public final class EntityDtoConverter {
 
     public static HolidayDTO getHolidayDTO(Holiday holiday) {
         HolidayDTO holidayDto = new HolidayDTO();
-        holidayDto.setDate(holiday.getDate().toString());
+        holidayDto.setDate(Constants.DATE_FORMAT_YYYY_MM_DD.format(holiday.getDate()));
         holidayDto.setDetails(holiday.getDetails());
         holidayDto.setId(holiday.getId());
         holidayDto.setPublicHoliday(holiday.isPublicHoliday());
@@ -200,7 +209,7 @@ public final class EntityDtoConverter {
         Holiday holiday = new Holiday();
         Date date;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(holidayDTO.getDate());
+            date = Constants.DATE_FORMAT_YYYY_MM_DD.parse(holidayDTO.getDate());
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format in Holiday Entity. Expected format is yyyy-MM--dd");
         }
@@ -210,6 +219,43 @@ public final class EntityDtoConverter {
         holiday.setPublicHoliday(holidayDTO.isPublicHoliday());
         return holiday;
     }
+
+    public static RoleDTO getRolesDto(Role role) {
+        RoleDTO dto = new RoleDTO();
+        dto.setId(role.getId());
+        dto.setPassword(role.getPwd());
+        List<String> listPrev = new ArrayList<>();
+        List<Privilages> listOfPrivilages = role.getListOfPrivilages();
+        for (Iterator<Privilages> iterator = listOfPrivilages.iterator(); iterator
+            .hasNext();) {
+            Privilages privilages = (Privilages) iterator.next();
+            listPrev.add(privilages.getTitle());
+        }
+        dto.setPrivilages(listPrev);
+        dto.setRoleName(role.getRoleName());
+        return dto;
+    }
+    
+    
+    public static Role getRole(RoleDTO rDto) {
+        Role role = new Role();
+        role.setId(rDto.getId());
+        role.setPwd(rDto.getPassword());
+        role.setRoleName(rDto.getRoleName());
+        List<Privilages> listOfPrev = new ArrayList<>();
+        List<String> privilages = rDto.getPrivilages();
+        List<String> list = Arrays.asList(PrivilageEnum.stringValues());
+        for (int i = 0; i < privilages.size(); ++i) {
+            String prev = privilages.get(i).toUpperCase();
+            if (list.contains(prev)) {
+                List<Privilages> findByTitle = privilagesRepository.findByTitle(prev);
+                listOfPrev.addAll(findByTitle);
+            }
+        }
+        role.setListOfPrivilages(listOfPrev);
+        return role;
+    }
+    
 
     
 

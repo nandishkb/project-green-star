@@ -1,30 +1,34 @@
 package com.outreach.greenstar.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "class_table")
-public class Cls {
+@Table(name="roles_table")
+public class Role {
 
     @Id
     @Column
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
-    @Column
-    private int grade;
+    @Column(unique=true, nullable=false)
+    private String roleName;
     
-    @ManyToOne(cascade=CascadeType.ALL, optional=false)
-    private School school;
+    @OneToMany(cascade=CascadeType.ALL)
+    private List<Privilages> listOfPrivilages;
     
+    @Column(nullable=false)
+    private String pwd;
 }
