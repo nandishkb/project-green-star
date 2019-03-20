@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +14,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestController
 public class GreenStarExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(StudentNotFoundException.class)
-    public final ResponseEntity<ErrorDetails> handleStudentNotFoundException(
-        StudentNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(ClsNotFoundException.class)
+    public final ResponseEntity<ErrorDetails> handleClsNotFoundException(
+        ClsNotFoundException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(),
+            ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(GroupNotFoundException.class)
+    public final ResponseEntity<ErrorDetails> handleGroupNotFoundException(
+        GroupNotFoundException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(),
+            ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(HolidayNotFoundException.class)
+    public final ResponseEntity<ErrorDetails> handleHolidayNotFoundException(
+        HolidayNotFoundException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(),
             ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
@@ -31,14 +46,6 @@ public class GreenStarExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
     
-    @ExceptionHandler(ClsNotFoundException.class)
-    public final ResponseEntity<ErrorDetails> handleClsNotFoundException(
-        ClsNotFoundException ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(),
-            ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-    
     @ExceptionHandler(SectionNotFoundException.class)
     public final ResponseEntity<ErrorDetails> handleSectionNotFoundException(
         SectionNotFoundException ex, WebRequest request) {
@@ -47,9 +54,9 @@ public class GreenStarExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
     
-    @ExceptionHandler(GroupNotFoundException.class)
-    public final ResponseEntity<ErrorDetails> handleGroupNotFoundException(
-        GroupNotFoundException ex, WebRequest request) {
+    @ExceptionHandler(StudentNotFoundException.class)
+    public final ResponseEntity<ErrorDetails> handleStudentNotFoundException(
+        StudentNotFoundException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(),
             ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);

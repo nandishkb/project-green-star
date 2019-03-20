@@ -42,11 +42,11 @@ public class GroupController {
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
     
-    @GetMapping(value="/school/{schoolId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    /*@GetMapping(value="/school/{schoolId}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<GroupDTO>> getGroupsBySchool(@PathVariable int schoolId) {
         List<GroupDTO> listOfGroups = groupService.getGroupsBySchool(schoolId);
         return new ResponseEntity<>(listOfGroups, HttpStatus.OK);
-    }
+    }*/
     
     @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupDTO group) {

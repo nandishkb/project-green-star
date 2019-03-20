@@ -4,16 +4,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
-import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.repository.ClassRepository;
 import com.outreach.greenstar.repository.GroupRepository;
-import com.outreach.greenstar.repository.SchoolRepository;
 import com.outreach.greenstar.repository.SectionRepository;
 
 @Repository("groupDao")
@@ -28,8 +28,8 @@ public class GroupDao {
     @Autowired
     private ClassRepository classRepository;
     
-    @Autowired
-    private SchoolRepository schoolRepository;
+    /*@Autowired
+    private SchoolRepository schoolRepository;*/
     
     public Group getGroupById(int groupId) {
         return groupRepo.getOne(groupId);
@@ -51,16 +51,17 @@ public class GroupDao {
         return Collections.emptyList();
     }
 
+    @Transactional
     public Group createOrUpdateGroup(Group grp) {
         return groupRepo.saveAndFlush(grp);
     }
 
-    public List<Group> getGroupBySchool(int schoolId) {
+    /*public List<Group> getGroupBySchool(int schoolId) {
         Optional<School> schoolOpt = schoolRepository.findById(schoolId);
         if (schoolOpt.isPresent()) {
             return groupRepo.findBySchool(schoolOpt.get());
         }
         return Collections.emptyList();
-    }
+    }*/
 
 }

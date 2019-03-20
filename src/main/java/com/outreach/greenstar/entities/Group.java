@@ -33,6 +33,4 @@ public class Group {
     @ManyToOne(cascade=CascadeType.ALL)
     private Cls cls;
     
-    @ManyToOne(cascade=CascadeType.ALL)
-    private School school;
 }

@@ -41,4 +41,9 @@ public class HolidayService {
         return EntityDtoConverter.getHolidayDTO(holiday);
     }
 
+    public HolidayDTO getHolidayById(int holidayId) {
+        Holiday holiday = holidayDao.getHolidayById(holidayId);
+        return EntityDtoConverter.getHolidayDTO(holiday);
+    }
+
 }

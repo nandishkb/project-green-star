@@ -3,6 +3,8 @@ package com.outreach.greenstar.dao;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +40,7 @@ public class SectionDao {
         throw new ClsNotFoundException("Invalid class id = "+classId);
     }
 
+    @Transactional
     public Section saveOrUpdate(Section section) {
         return sectionRepository.saveAndFlush(section);
     }

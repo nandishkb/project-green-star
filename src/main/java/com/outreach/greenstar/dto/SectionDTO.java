@@ -13,4 +13,8 @@ public class SectionDTO {
     private String name;
 
     private int    classId;
+    
+    private String className;
+    
+    private String schoolName;
 }

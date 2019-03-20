@@ -28,6 +28,12 @@ public class RolesController {
         List<RoleDTO> listOfRole = rolesService.getAllRoles();
         return new ResponseEntity<>(listOfRole, HttpStatus.OK);
     }
+    
+    @GetMapping(value = "/privilages", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> getAllPrivilages() {
+        List<String> listOfRole = rolesService.getAllPrivilages();
+        return new ResponseEntity<>(listOfRole, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/{roleName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RoleDTO> getRoleByName(@PathVariable String roleName) {

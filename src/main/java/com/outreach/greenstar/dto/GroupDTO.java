@@ -16,6 +16,8 @@ public class GroupDTO {
     private int sectionId;
     private int classId;
     private String sectionName;
+    private String className;
+    private String SchoolName;
     private List<Integer> studentIds;
     private List<String> studentNames;
 }

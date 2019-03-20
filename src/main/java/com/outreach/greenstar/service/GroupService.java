@@ -60,7 +60,6 @@ public class GroupService {
     }
 
     public GroupDTO createOrUpdateGroup(GroupDTO groupDto) {
-        
         Group grp = EntityDtoConverter.getGroup(groupDto);
         Cls cls = classDao.getClassById(groupDto.getClassId());
         if (cls == null) {
@@ -87,13 +86,13 @@ public class GroupService {
         return EntityDtoConverter.getGroupDto(newGroup, studentDao);
     }
 
-    public List<GroupDTO> getGroupsBySchool(int schoolId) {
+    /*public List<GroupDTO> getGroupsBySchool(int schoolId) {
         List<Group> listOfGroup = groupDao.getGroupBySchool(schoolId);
         List<GroupDTO> listOfGroupDTOs = new ArrayList<>();
         for (int i = 0; i < listOfGroup.size(); ++i) {
             listOfGroupDTOs.add(EntityDtoConverter.getGroupDto(listOfGroup.get(i), studentDao));
         }
         return listOfGroupDTOs;
-    }
+    }*/
 
 }

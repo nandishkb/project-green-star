@@ -2,6 +2,8 @@ package com.outreach.greenstar.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,9 +24,8 @@ public class RolesDao {
         return rolesRepository.findOneByRoleName(roleName);
     }
 
+    @Transactional
     public Role saveOrUpdate(Role role) {
         return rolesRepository.saveAndFlush(role);
     }
-    
-
 }

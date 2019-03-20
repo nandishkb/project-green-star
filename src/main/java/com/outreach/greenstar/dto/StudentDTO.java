@@ -23,12 +23,16 @@ public class StudentDTO {
     private String joiningDate;
     
     private int schoolId;
+    private String schoolName;
     
     private int clsId;
+    private String clsName;
     
     private int sectionId;
+    private String sectionName;
     
     private int groupId;
+    private String groupName;
     
     private String city;
     

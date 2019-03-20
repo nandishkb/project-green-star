@@ -2,11 +2,14 @@ package com.outreach.greenstar.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,12 @@ public class HolidayController {
     public ResponseEntity<List<HolidayDTO>> getAllHolidays() {
         List<HolidayDTO> holidayList = holidayService.getAllHolidays();
         return new ResponseEntity<>(holidayList, HttpStatus.OK);
+    }
+    
+    @GetMapping(path="/{holidayId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HolidayDTO> getHolidayById(@PathVariable int holidayId) {
+        HolidayDTO holiday = holidayService.getHolidayById(holidayId);
+        return new ResponseEntity<>(holiday, HttpStatus.OK);
     }
     
     @PostMapping(path="/bulk", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)

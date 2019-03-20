@@ -1,12 +1,12 @@
 package com.outreach.greenstar.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
-import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Section;
-import java.util.List;
 
 public interface GroupRepository extends JpaRepository<Group, Number> {
 
@@ -14,5 +14,5 @@ public interface GroupRepository extends JpaRepository<Group, Number> {
 
     List<Group> findByCls(Cls cls);
 
-    List<Group> findBySchool(School school);
+    /*List<Group> findBySchool(School school);*/
 }

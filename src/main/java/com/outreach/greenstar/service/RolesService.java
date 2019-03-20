@@ -1,6 +1,7 @@
 package com.outreach.greenstar.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.outreach.greenstar.dao.RolesDao;
 import com.outreach.greenstar.dto.RoleDTO;
 import com.outreach.greenstar.entities.Role;
 import com.outreach.greenstar.utility.EntityDtoConverter;
+import com.outreach.greenstar.utility.PrivilageEnum;
 
 @Service("rolesService")
 public class RolesService {
@@ -41,6 +43,10 @@ public class RolesService {
 
     public RoleDTO updateRole(RoleDTO rolesDTO) {
         return createRole(rolesDTO);
+    }
+
+    public List<String> getAllPrivilages() {
+        return Arrays.asList(PrivilageEnum.stringValues());
     }
 
 }

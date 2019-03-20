@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"student_id", "date"}))
+@Table(name="performance_param_table",uniqueConstraints=@UniqueConstraint(columnNames={"student_id", "date"}))
 public class PerformanceParam {
 
     @Id

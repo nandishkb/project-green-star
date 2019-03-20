@@ -48,6 +48,8 @@ public final class EntityDtoConverter {
         clsDto.setGrade(clsObj.getGrade());
         clsDto.setId(clsObj.getId());
         clsDto.setSchoolId(clsObj.getSchool().getId());
+        clsDto.setClassName(getClassNameRoman(clsObj.getGrade()));
+        clsDto.setSchoolName(clsObj.getSchool().getName());
         return clsDto;
     }
 
@@ -86,6 +88,8 @@ public final class EntityDtoConverter {
         sectionDTO.setClassId(section.getCls().getId());
         sectionDTO.setId(section.getId());
         sectionDTO.setName(section.getName());
+        sectionDTO.setClassName(getClassNameRoman(section.getCls().getGrade()));
+        sectionDTO.setSchoolName(section.getCls().getSchool().getName());
         return sectionDTO;
     }
     
@@ -102,6 +106,9 @@ public final class EntityDtoConverter {
         groupDto.setName(group.getName());
         groupDto.setSectionId(group.getSection().getId());
         groupDto.setSectionName(group.getSection().getName());
+        groupDto.setClassName(getClassNameRoman(group.getCls().getGrade()));
+        groupDto.setClassId(group.getCls().getId());
+        groupDto.setSchoolName(group.getSection().getCls().getSchool().getName());
         List<Student> studentsByGroup = studentDao.getStudentsByGroup(group.getId());
         List<Integer> studentIds = new ArrayList<>();
         List<String> studentNames = new ArrayList<>();
@@ -114,6 +121,22 @@ public final class EntityDtoConverter {
         groupDto.setStudentIds(studentIds);
         groupDto.setStudentNames(studentNames);
         return groupDto;
+    }
+
+    private static String getClassNameRoman(int grade) {
+        switch(grade) {
+            case 1: return "I";
+            case 2: return "II";
+            case 3: return "III";
+            case 4: return "IV";
+            case 5: return "V";
+            case 6: return "VI";
+            case 7: return "VII";
+            case 8: return "VIII";
+            case 9: return "IX";
+            case 10: return "X";
+        }
+        return grade+"";
     }
 
     public static Group getGroup(GroupDTO groupDto) {
@@ -173,6 +196,13 @@ public final class EntityDtoConverter {
         studentDTO.setSectionId(student.getSection().getId());
         studentDTO.setCity(student.getCity());
         studentDTO.setPincode(student.getPincode());
+        
+        //
+        studentDTO.setSchoolName(student.getSchool().getName());
+        studentDTO.setClsName(getClassNameRoman(student.getCls().getGrade()));
+        studentDTO.setSectionName(student.getSection().getName());
+        studentDTO.setGroupName(student.getGroup().getName());
+        //
         return studentDTO;
     }
     

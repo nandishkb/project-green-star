@@ -2,6 +2,8 @@ package com.outreach.greenstar.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -86,6 +88,7 @@ public class StudentDao {
         throw new SchoolNotFoundException("Invalid School ID = "+schoolId);
     }
 
+    @Transactional
     public Student createOrUpdateStudent(Student student) {
         return studentRepository.saveAndFlush(student);
     }
