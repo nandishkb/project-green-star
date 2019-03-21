@@ -19,7 +19,7 @@ public class HolidayDao {
 
     @Autowired
     private HolidayRepository holidayRepository;
-    
+
     public boolean isHoliday(Date date) {
         return !holidayRepository.findByDate(date).isEmpty();
     }
@@ -32,7 +32,8 @@ public class HolidayDao {
         for (Iterator<Holiday> iterator = listOfHolidays.iterator(); iterator
             .hasNext();) {
             Holiday holiday = (Holiday) iterator.next();
-            List<Holiday> storedHolidayList = holidayRepository.findByDate(holiday.getDate());
+            List<Holiday> storedHolidayList =
+                holidayRepository.findByDate(holiday.getDate());
             if (storedHolidayList.size() > 0) {
                 holiday.setId(storedHolidayList.get(0).getId());
             }
@@ -52,7 +53,7 @@ public class HolidayDao {
         if (optional.isPresent()) {
             return optional.get();
         }
-        throw new HolidayNotFoundException("Invalid holiday ID = "+holidayId);
+        throw new HolidayNotFoundException("Invalid holiday ID = " + holidayId);
     }
 
 }
