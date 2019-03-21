@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.PerformanceDao;
+import com.outreach.greenstar.dto.ClassReportDTO;
 import com.outreach.greenstar.dto.GroupReportDTO;
 import com.outreach.greenstar.dto.PerformanceData;
 import com.outreach.greenstar.dto.Summary;
-import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
+import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
 import com.outreach.greenstar.utility.Constants;
 
@@ -22,17 +23,19 @@ import com.outreach.greenstar.utility.Constants;
 public class ReportsService {
 
     @Autowired
-    private GroupDao groupDao;
-    
+    private GroupDao       groupDao;
+
     @Autowired
     private PerformanceDao performanceDao;
-    
-    public List<GroupReportDTO> getReportByGroup(int groupId, Date from, Date to) {
-        List<PerformanceParam> performanceByGroup = performanceDao.getPerformanceByGroup(groupId, from, to);
+
+    public List<GroupReportDTO> getReportByGroup(int groupId, Date from,
+        Date to) {
+        List<PerformanceParam> performanceByGroup =
+            performanceDao.getPerformanceByGroup(groupId, from, to);
         int currentStudentId = -1;
         Stack<GroupReportDTO> stack = new Stack<>();
-        for (Iterator<PerformanceParam> iterator = performanceByGroup.iterator(); iterator
-            .hasNext();) {
+        for (Iterator<PerformanceParam> iterator =
+            performanceByGroup.iterator(); iterator.hasNext();) {
             PerformanceParam pParam = iterator.next();
             Student student = pParam.getStudent();
             GroupReportDTO reportDto = null;
@@ -44,20 +47,60 @@ public class ReportsService {
                 dto.setSummary(new Summary());
                 reportDto = dto;
                 stack.push(reportDto);
-                currentStudentId=student.getId();
+                currentStudentId = student.getId();
             } else {
                 reportDto = stack.peek();
             }
             PerformanceData pData = new PerformanceData();
-            pData.setDate(Constants.DATE_FORMAT_YYYY_MM_DD.format(pParam.getDate()));
-            pData.setAttendance(pParam.isPresent()?1:0);
-            pData.setDiscipline(pParam.isDisciplined()?1:0);
-            pData.setHomeWork(pParam.isHWDone()?1:0);
+            pData.setDate(
+                Constants.DATE_FORMAT_YYYY_MM_DD.format(pParam.getDate()));
+            pData.setAttendance(pParam.isPresent() ? 1 : 0);
+            pData.setDiscipline(pParam.isDisciplined() ? 1 : 0);
+            pData.setHomeWork(pParam.isHWDone() ? 1 : 0);
             Summary summary = reportDto.getSummary();
-            summary.setAttendance(summary.getAttendance()+pData.getAttendance());
-            summary.setDiscipline(summary.getDiscipline()+pData.getDiscipline());
-            summary.setHomeWork(summary.getHomeWork()+pData.getHomeWork());
+            summary
+                .setAttendance(summary.getAttendance() + pData.getAttendance());
+            summary
+                .setDiscipline(summary.getDiscipline() + pData.getDiscipline());
+            summary.setHomeWork(summary.getHomeWork() + pData.getHomeWork());
             reportDto.getPerformanceData().add(pData);
+        }
+        return stack;
+    }
+
+    public List<ClassReportDTO> getReportByClass(int classId, Date from,
+        Date to) {
+        List<PerformanceParam> listPerf =
+            performanceDao.getPerformanceByClass(classId, from, to);
+        String currentSection = "";
+        Stack<ClassReportDTO> stack = new Stack<>();
+        for (Iterator<PerformanceParam> iterator = listPerf.iterator(); iterator
+            .hasNext();) {
+            PerformanceParam pParam = iterator.next();
+            Section section = pParam.getSection();
+            ClassReportDTO classReport = null;
+            if (!currentSection.equals(section.getName())) {
+                classReport = new ClassReportDTO();
+                classReport.setSectionName(
+                    pParam.getCls().getGrade() + " " + section.getName());
+                
+                stack.push(classReport);
+                currentSection = section.getName();
+            } else {
+                classReport = stack.peek();
+            }
+            classReport.setAttendance(
+                classReport.getAttendance() + (pParam.isPresent() ? 1 : 0));
+            classReport.setDiscipline(
+                classReport.getDiscipline() + (pParam.isDisciplined() ? 1 : 0));
+            classReport.setHomework(
+                classReport.getHomework() + (pParam.isHWDone() ? 1 : 0));
+            
+            /**
+             * perform avg of previous data;
+             */
+            classReport.setAvgPerformance((int)Math.round((double)((classReport.getAttendance()
+                + classReport.getDiscipline() + classReport.getHomework())) / 3));
         }
         return stack;
     }

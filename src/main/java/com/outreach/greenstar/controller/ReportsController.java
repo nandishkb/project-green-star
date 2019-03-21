@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.outreach.greenstar.dto.ClassReportDTO;
 import com.outreach.greenstar.dto.GroupReportDTO;
 import com.outreach.greenstar.service.ReportsService;
 
@@ -40,10 +41,20 @@ public class ReportsController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     
-//    @GetMapping(value="/group/{groupId}", produces=MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<GroupReportDTO> getReportByGroup(@PathVariable int groupId) {
-//        GroupReportDTO dto = reportsService.getReportByGroup(groupId);
-//        return new ResponseEntity<GroupReportDTO>(dto, HttpStatus.OK);
-//    }
+    @GetMapping(value="/cls/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ClassReportDTO>> getReportByClass(@PathVariable int classId, @RequestParam String fromDate,
+        @RequestParam String toDate) {
+        System.out.println("ReportsController.getReportByClass()");
+        Date from = null;
+        Date to = null;
+        try {
+            from = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+            to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM-dd");
+        }
+        List<ClassReportDTO> dto = reportsService.getReportByClass(classId, from, to);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
     
 }

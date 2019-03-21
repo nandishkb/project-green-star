@@ -43,4 +43,10 @@ public class PerformanceDao {
         return  listOfPerf;
     }
 
+    public List<PerformanceParam> getPerformanceByClass(int classId, Date from,
+        Date to) {
+        List<PerformanceParam> list = perfRepo.findByClsAndDateBetween(classId, from, to, Sort.by("section.name"));
+        return list;
+    }
+
 }

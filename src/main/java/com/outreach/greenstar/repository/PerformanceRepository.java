@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.outreach.greenstar.entities.PerformanceParam;
+import com.outreach.greenstar.entities.Cls;
 
 public interface PerformanceRepository
     extends JpaRepository<PerformanceParam, Number> {
@@ -30,4 +31,8 @@ public interface PerformanceRepository
     
     @Query("select p from PerformanceParam p where p.student.id=:id and p.date between :from and :to")
     public List<PerformanceParam> findByStudentAndDateBetween(int id, Date from, Date to, Sort sort);
+    
+    @Query("select p from PerformanceParam p where p.cls.id=:id and p.date between :from and :to")
+    List<PerformanceParam> findByClsAndDateBetween(int id, Date from, Date to, Sort sort);
+    
 }
