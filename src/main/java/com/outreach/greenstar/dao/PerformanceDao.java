@@ -37,15 +37,21 @@ public class PerformanceDao {
         return  listOfPerf;
     }
 
-    public List<PerformanceParam> getPerformanceByStudent(int studentId,
+    public List<PerformanceParam> getPerformanceByStudentSortByDate(int studentId,
         Date fromDate, Date toDate) {
         List<PerformanceParam> listOfPerf = perfRepo.findbyGroupAndDateBetween(studentId, fromDate, toDate, Sort.by("date"));
         return  listOfPerf;
     }
 
-    public List<PerformanceParam> getPerformanceByClass(int classId, Date from,
+    public List<PerformanceParam> getPerformanceByClassSortBySectionName(int classId, Date from,
         Date to) {
         List<PerformanceParam> list = perfRepo.findByClsAndDateBetween(classId, from, to, Sort.by("section.name"));
+        return list;
+    }
+    
+    public List<PerformanceParam> getPerformanceByClassSortByGruopName(int classId, Date from,
+        Date to) {
+        List<PerformanceParam> list = perfRepo.findByClsAndDateBetween(classId, from, to, Sort.by("group.name"));
         return list;
     }
 

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "group_table")
+@Table(name = "group_table", uniqueConstraints=@UniqueConstraint(columnNames={"cls_id", "name"}))
 public class Group {
 
     @Id
@@ -30,7 +31,7 @@ public class Group {
     )
     private int id;
     
-    @Column
+    @Column(nullable=false)
     private String name;
     
     @Column

@@ -39,7 +39,7 @@ public class StarService {
         Date fromDate = getStartDateOfMonth(monthYear);
         Date toDate = getEndDateOfMonth(monthYear);
         List<PerformanceParam> perfList =
-            performanceDao.getPerformanceByStudent(studentId, fromDate, toDate);
+            performanceDao.getPerformanceByStudentSortByDate(studentId, fromDate, toDate);
         StarDetailsDTO starDetailsDTO =
             calculateStarDetailsForStudent(perfList, monthYear);
         return starDetailsDTO;

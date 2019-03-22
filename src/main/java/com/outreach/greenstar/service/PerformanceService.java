@@ -57,7 +57,7 @@ public class PerformanceService {
             throw new StudentNotFoundException("Invalid Student ID = "+studentId);
         }
         List<PerformanceParam> perfList =
-            performanceDao.getPerformanceByStudent(studentId, fromDate, toDate);
+            performanceDao.getPerformanceByStudentSortByDate(studentId, fromDate, toDate);
         PerformanceParamDTO pdto =
             EntityDtoConverter.getPerformanceParamDTO(perfList);
         pdto.setFromDate(Constants.DATE_FORMAT_YYYY_MM_DD.format(fromDate));

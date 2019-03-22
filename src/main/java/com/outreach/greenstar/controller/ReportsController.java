@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.outreach.greenstar.dto.ClassReportDTO;
+import com.outreach.greenstar.dto.ClassGroupWiseReportDTO;
+import com.outreach.greenstar.dto.ClassSectionWiseReportDTO;
 import com.outreach.greenstar.dto.GroupReportDTO;
 import com.outreach.greenstar.service.ReportsService;
 
@@ -41,10 +42,9 @@ public class ReportsController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     
-    @GetMapping(value="/cls/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ClassReportDTO>> getReportByClass(@PathVariable int classId, @RequestParam String fromDate,
+    @GetMapping(value="/cls-section/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ClassSectionWiseReportDTO>> getReportByClassBySection(@PathVariable int classId, @RequestParam String fromDate,
         @RequestParam String toDate) {
-        System.out.println("ReportsController.getReportByClass()");
         Date from = null;
         Date to = null;
         try {
@@ -53,7 +53,22 @@ public class ReportsController {
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM-dd");
         }
-        List<ClassReportDTO> dto = reportsService.getReportByClass(classId, from, to);
+        List<ClassSectionWiseReportDTO> dto = reportsService.getReportByClassBySection(classId, from, to);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+    
+    @GetMapping(value="/cls-group/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ClassGroupWiseReportDTO>> getReportByClassByGroup(@PathVariable int classId, @RequestParam String fromDate,
+        @RequestParam String toDate) {
+        Date from = null;
+        Date to = null;
+        try {
+            from = new SimpleDateFormat("yyyy-MM-dd").parse(fromDate);
+            to = new SimpleDateFormat("yyyy-MM-dd").parse(toDate);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM-dd");
+        }
+        List<ClassGroupWiseReportDTO> dto = reportsService.getReportByClassByGroup(classId, from, to);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.PerformanceDao;
-import com.outreach.greenstar.dto.ClassReportDTO;
+import com.outreach.greenstar.dto.ClassGroupWiseReportDTO;
+import com.outreach.greenstar.dto.ClassSectionWiseReportDTO;
 import com.outreach.greenstar.dto.GroupReportDTO;
 import com.outreach.greenstar.dto.PerformanceData;
 import com.outreach.greenstar.dto.Summary;
+import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
@@ -68,19 +70,19 @@ public class ReportsService {
         return stack;
     }
 
-    public List<ClassReportDTO> getReportByClass(int classId, Date from,
+    public List<ClassSectionWiseReportDTO> getReportByClassBySection(int classId, Date from,
         Date to) {
         List<PerformanceParam> listPerf =
-            performanceDao.getPerformanceByClass(classId, from, to);
+            performanceDao.getPerformanceByClassSortBySectionName(classId, from, to);
         String currentSection = "";
-        Stack<ClassReportDTO> stack = new Stack<>();
+        Stack<ClassSectionWiseReportDTO> stack = new Stack<>();
         for (Iterator<PerformanceParam> iterator = listPerf.iterator(); iterator
             .hasNext();) {
             PerformanceParam pParam = iterator.next();
             Section section = pParam.getSection();
-            ClassReportDTO classReport = null;
+            ClassSectionWiseReportDTO classReport = null;
             if (!currentSection.equals(section.getName())) {
-                classReport = new ClassReportDTO();
+                classReport = new ClassSectionWiseReportDTO();
                 classReport.setSectionName(
                     pParam.getCls().getGrade() + " " + section.getName());
                 
@@ -99,9 +101,45 @@ public class ReportsService {
             /**
              * perform avg of previous data;
              */
-            classReport.setAvgPerformance((int)Math.round((double)((classReport.getAttendance()
+            classReport.setTotal((int)Math.round((double)((classReport.getAttendance()
                 + classReport.getDiscipline() + classReport.getHomework())) / 3));
         }
+        return stack;
+    }
+    
+    public List<ClassGroupWiseReportDTO> getReportByClassByGroup(int classId, Date from,
+        Date to) {
+        List<PerformanceParam> listPerf =
+            performanceDao.getPerformanceByClassSortByGruopName(classId, from, to);
+        String currentGroupName = "";
+        Stack<ClassGroupWiseReportDTO> stack = new Stack<>();
+        for (Iterator<PerformanceParam> iterator = listPerf.iterator(); iterator.hasNext();) {
+            PerformanceParam pParam = iterator.next();
+            Group group = pParam.getGroup();
+            ClassGroupWiseReportDTO groupReport = null;
+            if (!currentGroupName.equals(group.getName())) {
+                groupReport = new ClassGroupWiseReportDTO();
+                groupReport.setGroupName(group.getName());
+                stack.push(groupReport);
+                currentGroupName = group.getName();
+            } else {
+                groupReport = stack.peek();
+            }
+            groupReport.setAttendance(
+                groupReport.getAttendance() + (pParam.isPresent() ? 1 : 0));
+            groupReport.setDiscipline(
+                groupReport.getDiscipline() + (pParam.isDisciplined() ? 1 : 0));
+            groupReport.setHomework(
+                groupReport.getHomework() + (pParam.isHWDone() ? 1 : 0));
+            
+            /**
+             * perform avg of previous data;
+             */
+            groupReport.setTotal((int)Math.round((double)((groupReport.getAttendance()
+                + groupReport.getDiscipline() + groupReport.getHomework())) / 3));
+            
+        }
+        
         return stack;
     }
 
