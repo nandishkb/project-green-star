@@ -58,7 +58,7 @@ public class HolidayController {
         return new ResponseEntity<>(holDTO, HttpStatus.CREATED);
     }
     
-    @DeleteMapping(value="")
+    @DeleteMapping(value="/{holidayId}")
     public ResponseEntity<String> deleteHoliday(@PathVariable int holidayId) {
         holidayService.deleteHoliday(holidayId);
         return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);

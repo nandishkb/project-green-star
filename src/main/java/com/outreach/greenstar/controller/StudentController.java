@@ -79,7 +79,7 @@ public class StudentController {
         return new ResponseEntity<>(newStudent, HttpStatus.OK);
     }
     
-    @DeleteMapping(value="")
+    @DeleteMapping(value="/{studentId}")
     public ResponseEntity<String> deleteStudent(@PathVariable int studentId) {
         studentService.deleteStudent(studentId);
         return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);

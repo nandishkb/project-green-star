@@ -50,7 +50,7 @@ public class SectionController {
         return new ResponseEntity<>(newSection, HttpStatus.OK);
     }
     
-    @DeleteMapping(value="")
+    @DeleteMapping(value="/{sectionId}")
     public ResponseEntity<String> deleteSection(@PathVariable int sectionId) {
         sectionService.deleteSection(sectionId);
         return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
