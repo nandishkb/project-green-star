@@ -38,7 +38,7 @@ public class ProjectGreenStarApplication {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/**").allowedOrigins("*");
+                registry.addMapping("/api/v1/**").allowedOrigins("*").allowedMethods("*");
             }
         };
     }
