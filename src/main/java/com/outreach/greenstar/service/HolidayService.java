@@ -46,4 +46,14 @@ public class HolidayService {
         return EntityDtoConverter.getHolidayDTO(holiday);
     }
 
+    public HolidayDTO updateHoliday(HolidayDTO holiday) {
+        holidayDao.getHolidayById(holiday.getId());
+        return createHoliday(holiday);
+    }
+
+    public void deleteHoliday(int holidayId) {
+        Holiday holiday = holidayDao.getHolidayById(holidayId);
+        holidayDao.deleteHoliday(holiday);
+    }
+
 }

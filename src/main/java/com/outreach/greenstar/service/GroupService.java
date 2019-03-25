@@ -59,7 +59,7 @@ public class GroupService {
         return EntityDtoConverter.getGroupDto(group, studentDao);
     }
 
-    public GroupDTO createOrUpdateGroup(GroupDTO groupDto) {
+    public GroupDTO createGroup(GroupDTO groupDto) {
         Group grp = EntityDtoConverter.getGroup(groupDto);
         Cls cls = classDao.getClassById(groupDto.getClassId());
         if (cls == null) {
@@ -84,6 +84,16 @@ public class GroupService {
             }
         }
         return EntityDtoConverter.getGroupDto(newGroup, studentDao);
+    }
+
+    public GroupDTO updateGroup(GroupDTO group) {
+        groupDao.getGroupById(group.getId());
+        return createGroup(group);
+    }
+
+    public void deleteGroup(int groupId) {
+        Group group = groupDao.getGroupById(groupId);
+        groupDao.deleteGroup(group);
     }
 
     /*public List<GroupDTO> getGroupsBySchool(int schoolId) {

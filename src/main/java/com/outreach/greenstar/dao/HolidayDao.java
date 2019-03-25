@@ -56,4 +56,9 @@ public class HolidayDao {
         throw new HolidayNotFoundException("Invalid holiday ID = " + holidayId);
     }
 
+    @Transactional
+    public void deleteHoliday(Holiday holiday) {
+        holidayRepository.delete(holiday);
+    }
+
 }

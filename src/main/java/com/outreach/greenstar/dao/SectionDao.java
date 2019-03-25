@@ -45,4 +45,8 @@ public class SectionDao {
         return sectionRepository.saveAndFlush(section);
     }
 
+    public void deleteSection(Section section) {
+        sectionRepository.delete(section);
+    }
+
 }

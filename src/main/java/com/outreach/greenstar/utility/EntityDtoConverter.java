@@ -174,6 +174,10 @@ public final class EntityDtoConverter {
         perfDTO.setPerformanceData(performanceData);
         return perfDTO;
     }
+    
+    public static List<PerformanceParam> getPerformanceParam(PerformanceParamDTO dto) {
+        return null;
+    }
 
     public static StudentDTO getStudentDTO(Student student) {
         StudentDTO studentDTO = new StudentDTO();

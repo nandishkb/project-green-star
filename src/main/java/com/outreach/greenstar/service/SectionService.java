@@ -54,7 +54,13 @@ public class SectionService {
     }
 
     public SectionDTO updateSection(SectionDTO section) {
+        sectionDao.getSectionById(section.getId());
         return createSection(section);
+    }
+
+    public void deleteSection(int sectionId) {
+        Section section = sectionDao.getSectionById(sectionId);
+        sectionDao.deleteSection(section);
     }
 
 }

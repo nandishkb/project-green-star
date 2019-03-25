@@ -93,4 +93,8 @@ public class StudentDao {
         return studentRepository.saveAndFlush(student);
     }
 
+    public void deleteStudent(Student student) {
+        studentRepository.delete(student);
+    }
+
 }

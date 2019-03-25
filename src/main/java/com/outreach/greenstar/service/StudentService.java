@@ -125,12 +125,18 @@ public class StudentService {
     }
 
     public StudentDTO updateStudent(StudentDTO studentDto) {
+        studentDao.getStudentById(studentDto.getId());
         return createStudent(studentDto);
     }
 
     public StudentDTO getStudent(int studentId) {
         Student student = studentDao.getStudentById(studentId);
         return EntityDtoConverter.getStudentDTO(student);
+    }
+
+    public void deleteStudent(int studentId) {
+        Student student = studentDao.getStudentById(studentId);
+        studentDao.deleteStudent(student);
     }
 
     

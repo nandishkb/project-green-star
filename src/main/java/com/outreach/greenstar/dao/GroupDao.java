@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.Section;
+import com.outreach.greenstar.exeption.GroupNotFoundException;
 import com.outreach.greenstar.repository.ClassRepository;
 import com.outreach.greenstar.repository.GroupRepository;
 import com.outreach.greenstar.repository.SectionRepository;
@@ -32,7 +33,13 @@ public class GroupDao {
     private SchoolRepository schoolRepository;*/
     
     public Group getGroupById(int groupId) {
-        return groupRepo.getOne(groupId);
+        Group group = null;
+        try {
+            group = groupRepo.getOne(groupId);
+        } catch (Exception e) {
+            throw new GroupNotFoundException("Invalid Group ID = "+groupId);
+        }
+        return group;
     }
 
     public List<Group> getGroupBySection(int sectionId) {
@@ -54,6 +61,10 @@ public class GroupDao {
     @Transactional
     public Group createOrUpdateGroup(Group grp) {
         return groupRepo.saveAndFlush(grp);
+    }
+
+    public void deleteGroup(Group group) {
+        groupRepo.delete(group);
     }
 
     /*public List<Group> getGroupBySchool(int schoolId) {

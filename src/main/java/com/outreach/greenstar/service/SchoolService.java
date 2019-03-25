@@ -45,7 +45,13 @@ public class SchoolService {
     }
 
     public SchoolDTO updateSchool(SchoolDTO schoolDto) {
+        schoolDao.getSchoolById(schoolDto.getId());
         return createSchool(schoolDto);
+    }
+
+    public void deleteSchool(int schoolId) {
+        School school = schoolDao.getSchoolById(schoolId);
+        schoolDao.deleteSchool(school);
     }
 
 }

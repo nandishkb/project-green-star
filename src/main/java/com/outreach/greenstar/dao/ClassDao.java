@@ -40,4 +40,8 @@ public class ClassDao {
         return classRepository.saveAndFlush(cls);
     }
 
+    public void deleteClass(Cls cls) {
+        classRepository.delete(cls);
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,12 +51,19 @@ public class GroupController {
     
     @PostMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupDTO group) {
-        GroupDTO newGroup = groupService.createOrUpdateGroup(group);
+        GroupDTO newGroup = groupService.createGroup(group);
         return new ResponseEntity<>(newGroup, HttpStatus.OK);
     }
     
     @PutMapping(value="", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupDTO> updateGroup(@RequestBody GroupDTO group) {
-        return createGroup(group);
+        GroupDTO groupDto = groupService.updateGroup(group);
+        return new ResponseEntity<>(groupDto, HttpStatus.OK);
+    }
+    
+    @DeleteMapping(value="")
+    public ResponseEntity<String> deleteGroup(@PathVariable int groupId) {
+        groupService.deleteGroup(groupId);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,4 +48,9 @@ public class ClassController {
         ClsDTO updatedCls = classService.updateClass(cls);
         return new ResponseEntity<>(updatedCls, HttpStatus.OK);
     }
+    
+    @DeleteMapping(value="")
+    public ResponseEntity<String> deleteClass(@PathVariable int classId) {
+        classService.deleteClass(classId);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);    }
 }

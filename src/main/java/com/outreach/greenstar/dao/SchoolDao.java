@@ -34,5 +34,10 @@ public class SchoolDao {
     public School createOrUpdateSchool(School school) {
         return schoolRepository.saveAndFlush(school);
     }
+    
+    @Transactional
+    public void deleteSchool(School school) {
+        schoolRepository.delete(school);
+    }
 
 }

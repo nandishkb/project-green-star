@@ -50,6 +50,11 @@ public class PerformanceController {
 
     }
     
+    @GetMapping(value = "/group/{groupId}/{bizRole}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getPerformanceByGroupMessage(@PathVariable int groupId, @PathVariable int bizRole) {
+        return "Success Message Possibe";
+    }
+    
     @GetMapping(value = "/student/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PerformanceParamDTO> getPerformanceByStudent(
         @PathVariable int studentId, @RequestParam String fromDate,

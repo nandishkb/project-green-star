@@ -42,11 +42,17 @@ public class RolesService {
     }
 
     public RoleDTO updateRole(RoleDTO rolesDTO) {
+        rolesDao.getRoleById(rolesDTO.getId());
         return createRole(rolesDTO);
     }
 
     public List<String> getAllPrivilages() {
         return Arrays.asList(PrivilageEnum.stringValues());
+    }
+
+    public void deleteRole(int roleId) {
+        Role role = rolesDao.getRoleById(roleId);
+        rolesDao.deleteRole(role);
     }
 
 }

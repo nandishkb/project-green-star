@@ -46,7 +46,13 @@ public class ClassService {
     }
 
     public ClsDTO updateClass(ClsDTO clsDto) {
+        classDao.getClassById(clsDto.getId());
         return createClass(clsDto);
+    }
+
+    public void deleteClass(int classId) {
+        Cls cls = classDao.getClassById(classId);
+        classDao.deleteClass(cls);
     }
 
 }
