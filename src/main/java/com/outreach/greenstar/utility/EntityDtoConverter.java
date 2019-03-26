@@ -15,6 +15,7 @@ import com.outreach.greenstar.dto.ClsDTO;
 import com.outreach.greenstar.dto.GroupDTO;
 import com.outreach.greenstar.dto.HolidayDTO;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
+import com.outreach.greenstar.dto.PrivilagesDTO;
 import com.outreach.greenstar.dto.RoleDTO;
 import com.outreach.greenstar.dto.SchoolDTO;
 import com.outreach.greenstar.dto.SectionDTO;
@@ -206,6 +207,7 @@ public final class EntityDtoConverter {
         studentDTO.setClsName(getClassNameRoman(student.getCls().getGrade()));
         studentDTO.setSectionName(student.getSection().getName());
         studentDTO.setGroupName(student.getGroup().getName());
+        studentDTO.setGender(student.getGender());
         //
         return studentDTO;
     }
@@ -227,6 +229,7 @@ public final class EntityDtoConverter {
         student.setRollNumber(sDto.getRollNumber());
         student.setCity(sDto.getCity());
         student.setPincode(sDto.getPincode());
+        student.setGender(sDto.getGender());
         return student;
     }
 
@@ -257,13 +260,16 @@ public final class EntityDtoConverter {
     public static RoleDTO getRolesDto(Role role) {
         RoleDTO dto = new RoleDTO();
         dto.setId(role.getId());
-        dto.setPassword(role.getPwd());
-        List<String> listPrev = new ArrayList<>();
+        dto.setPassword(null);
         List<Privilages> listOfPrivilages = role.getListOfPrivilages();
+        List<PrivilagesDTO> listPrev = new ArrayList<>();
         for (Iterator<Privilages> iterator = listOfPrivilages.iterator(); iterator
             .hasNext();) {
-            Privilages privilages = (Privilages) iterator.next();
-            listPrev.add(privilages.getTitle());
+            Privilages privilages = iterator.next();
+            PrivilagesDTO prv = new PrivilagesDTO();
+            prv.setId(privilages.getId());
+            prv.setTitle(privilages.getTitle());
+            listPrev.add(prv);
         }
         dto.setPrivilages(listPrev);
         dto.setRoleName(role.getRoleName());
@@ -276,17 +282,16 @@ public final class EntityDtoConverter {
         role.setId(rDto.getId());
         role.setPwd(rDto.getPassword());
         role.setRoleName(rDto.getRoleName());
-        List<Privilages> listOfPrev = new ArrayList<>();
-        List<String> privilages = rDto.getPrivilages();
-        List<String> list = Arrays.asList(PrivilageEnum.stringValues());
+        
+        /*List<String> list = Arrays.asList(PrivilageEnum.stringValues());
         for (int i = 0; i < privilages.size(); ++i) {
             String prev = privilages.get(i).toUpperCase();
             if (list.contains(prev)) {
                 List<Privilages> findByTitle = privilagesRepository.findByTitle(prev);
                 listOfPrev.addAll(findByTitle);
             }
-        }
-        role.setListOfPrivilages(listOfPrev);
+        }*/
+        
         return role;
     }
     

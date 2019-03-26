@@ -72,4 +72,9 @@ public class ReportsController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     
+    /*@GetMapping(value="/attendance-comp/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ClassGroupWiseReportDTO>> getReportByClassByGroup(@PathVariable int classId, @RequestParam String fromDate,
+        @RequestParam String toDate) {*/
+    
+    
 }

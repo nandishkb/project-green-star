@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Data
@@ -16,6 +18,7 @@ public class Privilages {
     @Column
     private int id;
     
+    @JsonProperty("label")
     @Column(unique=true, nullable=false)
     private String title;
     

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.outreach.greenstar.entities.Privilages;
 
 import lombok.Data;
 
@@ -15,8 +16,8 @@ public class RoleDTO {
     @JsonProperty("label")
     private String roleName;
     
-    private List<String> privilages;
+    private List<PrivilagesDTO> privilages;
     
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
 }

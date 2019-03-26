@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.outreach.greenstar.dto.RoleDTO;
+import com.outreach.greenstar.entities.Privilages;
 import com.outreach.greenstar.service.RolesService;
 
 @RestController
@@ -31,8 +32,8 @@ public class RolesController {
     }
     
     @GetMapping(value = "/privilages", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String>> getAllPrivilages() {
-        List<String> listOfRole = rolesService.getAllPrivilages();
+    public ResponseEntity<List<Privilages>> getAllPrivilages() {
+        List<Privilages> listOfRole = rolesService.getAllPrivilages();
         return new ResponseEntity<>(listOfRole, HttpStatus.OK);
     }
 
@@ -44,7 +45,13 @@ public class RolesController {
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RoleDTO> createRole(@RequestBody RoleDTO rolesDTO) {
-        RoleDTO role = rolesService.createRole(rolesDTO);
+        RoleDTO role = null;
+        try {
+            role = rolesService.createRole(rolesDTO);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return new ResponseEntity<RoleDTO>(role, HttpStatus.OK);
     }
 

@@ -9,7 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.outreach.greenstar.entities.Privilages;
 import com.outreach.greenstar.entities.Role;
+import com.outreach.greenstar.repository.PrivilagesRepository;
 import com.outreach.greenstar.repository.RolesRepository;
 
 @Repository("rolesDao")
@@ -17,6 +19,9 @@ public class RolesDao {
 
     @Autowired
     private RolesRepository rolesRepository;
+    
+    @Autowired
+    private PrivilagesRepository privilagesRepository;
     
     public List<Role> getAllRoles() {
         return rolesRepository.findAll();
@@ -41,5 +46,9 @@ public class RolesDao {
 
     public void deleteRole(Role role) {
         rolesRepository.delete(role);
+    }
+
+    public List<Privilages> getAllPrivilages() {
+        return privilagesRepository.findAll();
     }
 }
