@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.outreach.greenstar.dto.AttendanceCompDTO;
 import com.outreach.greenstar.dto.ClassGroupWiseReportDTO;
 import com.outreach.greenstar.dto.ClassSectionWiseReportDTO;
 import com.outreach.greenstar.dto.GroupReportDTO;
@@ -72,9 +73,17 @@ public class ReportsController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
     
-    /*@GetMapping(value="/attendance-comp/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ClassGroupWiseReportDTO>> getReportByClassByGroup(@PathVariable int classId, @RequestParam String fromDate,
-        @RequestParam String toDate) {*/
-    
+    @GetMapping(value="/attendance-comp/{classId}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AttendanceCompDTO>> getAddendanceImprovementReportByClass(@PathVariable int classId, @RequestParam String currMonth) {
+        Date monthYear = null;
+        try {
+            monthYear = new SimpleDateFormat("yyyy-MM").parse(currMonth);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM");
+        }
+        List<AttendanceCompDTO> listOfComp = reportsService.getAddendanceImprovementReportByClass(classId, monthYear);
+        return new ResponseEntity<>(listOfComp, HttpStatus.OK);
+        
+    }
     
 }

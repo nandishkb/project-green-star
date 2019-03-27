@@ -124,7 +124,7 @@ public final class EntityDtoConverter {
         return groupDto;
     }
 
-    private static String getClassNameRoman(int grade) {
+    public static String getClassNameRoman(int grade) {
         switch(grade) {
             case 1: return "I";
             case 2: return "II";

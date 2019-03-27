@@ -1,5 +1,6 @@
 package com.outreach.greenstar.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -10,16 +11,19 @@ import org.springframework.stereotype.Service;
 
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.PerformanceDao;
+import com.outreach.greenstar.dto.AttendanceCompDTO;
 import com.outreach.greenstar.dto.ClassGroupWiseReportDTO;
 import com.outreach.greenstar.dto.ClassSectionWiseReportDTO;
 import com.outreach.greenstar.dto.GroupReportDTO;
 import com.outreach.greenstar.dto.PerformanceData;
 import com.outreach.greenstar.dto.Summary;
+import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
 import com.outreach.greenstar.entities.Section;
 import com.outreach.greenstar.entities.Student;
 import com.outreach.greenstar.utility.Constants;
+import com.outreach.greenstar.utility.EntityDtoConverter;
 
 @Service("reportsService")
 public class ReportsService {
@@ -141,6 +145,91 @@ public class ReportsService {
         }
         
         return stack;
+    }
+
+    public List<AttendanceCompDTO> getAddendanceImprovementReportByClass(
+        int classId, Date monthYear) {
+        Date currMonth = monthYear;
+        Date prevMonth = null;
+        Date currMonthStartDate = null;
+        Date currMonthEndDate = null;
+        Date prevMonthStartDate = null;
+        Date prevMonthEndDate = null;
+        
+        currMonthStartDate = getStartDateOfMonth(currMonth);
+        currMonthEndDate = getEndDateOfMonth(currMonth);
+        
+        
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currMonth);
+        cal.add(Calendar.MONTH, -1);
+        prevMonth = cal.getTime();
+        
+        prevMonthStartDate = getStartDateOfMonth(prevMonth);
+        prevMonthEndDate = getEndDateOfMonth(prevMonth);
+        
+        System.out
+            .println("ReportsService.getAddendanceImprovementReportByClass() = "+currMonth);
+        System.out
+        .println("ReportsService.getAddendanceImprovementReportByClass() = "+prevMonth);
+        System.out
+        .println("ReportsService.getAddendanceImprovementReportByClass() = "+currMonthStartDate);
+        System.out
+        .println("ReportsService.getAddendanceImprovementReportByClass() = "+currMonthEndDate);
+        System.out
+        .println("ReportsService.getAddendanceImprovementReportByClass() = "+prevMonthStartDate);
+        System.out
+        .println("ReportsService.getAddendanceImprovementReportByClass() = "+prevMonthEndDate);
+        
+        List<PerformanceParam> currPerfList =
+            performanceDao.getPerformanceByClassSortBySectionName(classId, currMonthStartDate, currMonthEndDate);
+        List<PerformanceParam> prevPerfList =
+            performanceDao.getPerformanceByClassSortBySectionName(classId, prevMonthStartDate, prevMonthEndDate);
+        
+        String currentSectionName = "";
+        Stack<AttendanceCompDTO> stack = new Stack<>();
+        
+        for (Iterator<PerformanceParam> iterator = currPerfList.iterator(); iterator.hasNext();) {
+            PerformanceParam pParam = iterator.next();
+            Cls cls = pParam.getCls();
+            Section section = pParam.getSection();
+            AttendanceCompDTO dto = null;
+            if (!currentSectionName.equals(section.getName())) {
+                dto = new AttendanceCompDTO();
+                dto.setClassName(EntityDtoConverter.getClassNameRoman(cls.getGrade()));
+                dto.setSectionName(section.getName());
+                currentSectionName = section.getName();
+//                dto.setStartMonth(startMonth);
+//                dto.setEndMonth(endMonth);
+            } else {
+                dto = stack.peek();
+            }
+            dto.setCurrMonthPercentage(dto.getCurrMonthPercentage() + (pParam.isPresent() ? 1 :0));
+            
+        }
+        
+        
+        return null;
+    }
+    
+    private Date getEndDateOfMonth(Date monthYear) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(monthYear);
+        cal.set(Calendar.DAY_OF_MONTH,
+            cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System.out
+            .println("StartEndDate.main() === endDate = " + cal.getTime());
+        return cal.getTime();
+    }
+
+    private Date getStartDateOfMonth(Date monthYear) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(monthYear);
+        cal.set(Calendar.DAY_OF_MONTH,
+            cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        System.out
+            .println("StartEndDate.main() === startDate = " + cal.getTime());
+        return cal.getTime();
     }
 
 }
