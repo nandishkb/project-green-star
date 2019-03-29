@@ -36,5 +36,18 @@ public class StarController {
         return new ResponseEntity<>(starDetailsDTO, HttpStatus.OK);
         
     }
+    
+    @GetMapping(value="/group/{groupId}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StarDetailsDTO> getStarDetailsForGroup(@PathVariable int groupId, @RequestParam String month) {
+        Date monthYear = null;
+        try {
+            monthYear = new SimpleDateFormat("yyyy-MM").parse(month);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Invalid date format. Expected format = yyyy-MM");
+        }
+        StarDetailsDTO starDetailsDTO = starService.getStarDetailsByGroup(groupId, monthYear);
+        return new ResponseEntity<>(starDetailsDTO, HttpStatus.OK);
+        
+    }
 
 }
