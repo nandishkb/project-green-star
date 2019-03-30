@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.HolidayDao;
 import com.outreach.greenstar.dao.PerformanceDao;
+import com.outreach.greenstar.dao.SchoolDao;
 import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.StarDetailsDTO;
 import com.outreach.greenstar.entities.Group;
 import com.outreach.greenstar.entities.PerformanceParam;
+import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.entities.Student;
 import com.outreach.greenstar.exeption.StudentNotFoundException;
 import com.outreach.greenstar.utility.ColorEnum;
@@ -34,6 +36,9 @@ public class StarService {
     
     @Autowired
     private GroupDao     groupDao;
+    
+    @Autowired
+    private SchoolDao     schoolDao;
     
     public StarDetailsDTO getStarDetailsByStudent(int studentId,
         Date monthYear) {
@@ -221,10 +226,48 @@ public class StarService {
             .println("StartEndDate.main() === startDate = " + cal.getTime());
         return cal.getTime();
     }
-
+    
+    public StarDetailsDTO getStarDetailsByStudentId(int studentId, Date monthYear) {
+        Student student = studentDao.getStudentById(studentId);
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(student);
+        return getStarDetailsByStudentsList(students, monthYear);
+    }
+    
     public StarDetailsDTO getStarDetailsByGroup(int groupId, Date monthYear) {
-        List<Student> studentsByGroup = studentDao.getStudentsByGroup(groupId);
-        int noOfStudents = studentsByGroup.size();
+        List<Student> students = studentDao.getStudentsByGroup(groupId);
+        return getStarDetailsByStudentsList(students, monthYear);
+    }
+    
+    public StarDetailsDTO getStarDetailsBySection(int sectionId, Date monthYear) {
+        List<Student> students = studentDao.getStudentsBySection(sectionId);
+        return getStarDetailsByStudentsList(students, monthYear);
+    }
+    
+    public StarDetailsDTO getStarDetailsByClass(int classId, Date monthYear) {
+        List<Student> students = studentDao.getStudentsByClass(classId);
+        return getStarDetailsByStudentsList(students, monthYear);
+    }
+    
+    public StarDetailsDTO getStarDetailsBySchool(int schoolId, Date monthYear) {
+        List<Student> students = studentDao.getStudentsBySchool(schoolId);
+        return getStarDetailsByStudentsList(students, monthYear);
+    }
+    
+    public StarDetailsDTO getStarDetailsByCity(String city, Date monthYear) {
+        List<School> listOfSchools = schoolDao.getSchoolsByCity(city);
+        List<Student> students = new ArrayList<>();
+        for (Iterator<School> iterator = listOfSchools.iterator(); iterator
+            .hasNext();) {
+            School school = iterator.next();
+            List<Student> studentsBySchool = studentDao.getStudentsBySchool(school.getId());
+            students.addAll(studentsBySchool);
+        }
+        return getStarDetailsByStudentsList(students, monthYear);
+    }
+
+    public StarDetailsDTO getStarDetailsByStudentsList(List<Student> students, Date monthYear) {
+        int noOfStudents = students.size();
         int daysInMonth = getNumberOfDaysInMonth(monthYear);
         List<Integer> attStarData = new ArrayList<>();
         for (int i = 0; i < daysInMonth; ++i) {
@@ -240,7 +283,7 @@ public class StarService {
         for (int i = 0; i < daysInMonth; ++i) {
             hwStarData.add(ColorEnum.WHITE.getId());
         }
-        for (Iterator<Student> iterator = studentsByGroup.iterator(); iterator
+        for (Iterator<Student> iterator = students.iterator(); iterator
             .hasNext();) {
             Student student = (Student) iterator.next();
             Date fromDate = getStartDateOfMonth(monthYear);

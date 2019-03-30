@@ -23,4 +23,5 @@ public interface StudentRepository extends JpaRepository<Student, Number> {
     List<Student> findByClsAndGroupIsNull(Cls cls);
 
     List<Student> findBySectionAndGroupIsNull(Section section);
+    
 }

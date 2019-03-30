@@ -40,4 +40,13 @@ public class SchoolDao {
         schoolRepository.delete(school);
     }
 
+    public List<School> getSchoolsByCity(String city) {
+        return schoolRepository.findByCity(city);
+    }
+
+    public List<String> getAllCities() {
+        
+        return schoolRepository.getAllCities();
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.outreach.greenstar.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,16 @@ public class SchoolService {
     public void deleteSchool(int schoolId) {
         School school = schoolDao.getSchoolById(schoolId);
         schoolDao.deleteSchool(school);
+    }
+
+    public Set<String> getAllCities() {
+        List<String> allCities = schoolDao.getAllCities();
+        Set<String> cities = new LinkedHashSet<>();
+        for(int i = 0 ; i < allCities.size() ; ++i) {
+            cities.add(allCities.get(i).toUpperCase().trim());
+        }
+        
+        return new LinkedHashSet<String>(cities);
     }
 
 }
