@@ -212,8 +212,6 @@ public class StarService {
         cal.setTime(monthYear);
         cal.set(Calendar.DAY_OF_MONTH,
             cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        System.out
-            .println("StartEndDate.main() === endDate = " + cal.getTime());
         return cal.getTime();
     }
 
@@ -222,8 +220,6 @@ public class StarService {
         cal.setTime(monthYear);
         cal.set(Calendar.DAY_OF_MONTH,
             cal.getActualMinimum(Calendar.DAY_OF_MONTH));
-        System.out
-            .println("StartEndDate.main() === startDate = " + cal.getTime());
         return cal.getTime();
     }
     
@@ -255,7 +251,7 @@ public class StarService {
     }
     
     public StarDetailsDTO getStarDetailsByCity(String city, Date monthYear) {
-        List<School> listOfSchools = schoolDao.getSchoolsByCity(city);
+        List<School> listOfSchools = schoolDao.getSchoolsByCity(city.toUpperCase());
         List<Student> students = new ArrayList<>();
         for (Iterator<School> iterator = listOfSchools.iterator(); iterator
             .hasNext();) {

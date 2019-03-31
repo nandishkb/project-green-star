@@ -168,19 +168,6 @@ public class ReportsService {
         prevMonthStartDate = getStartDateOfMonth(prevMonth);
         prevMonthEndDate = getEndDateOfMonth(prevMonth);
         
-        System.out
-            .println("ReportsService.getAddendanceImprovementReportByClass() = "+currMonth);
-        System.out
-        .println("ReportsService.getAddendanceImprovementReportByClass() = "+prevMonth);
-        System.out
-        .println("ReportsService.getAddendanceImprovementReportByClass() = "+currMonthStartDate);
-        System.out
-        .println("ReportsService.getAddendanceImprovementReportByClass() = "+currMonthEndDate);
-        System.out
-        .println("ReportsService.getAddendanceImprovementReportByClass() = "+prevMonthStartDate);
-        System.out
-        .println("ReportsService.getAddendanceImprovementReportByClass() = "+prevMonthEndDate);
-        
         List<PerformanceParam> currPerfList =
             performanceDao.getPerformanceByClassSortBySectionName(classId, currMonthStartDate, currMonthEndDate);
         List<PerformanceParam> prevPerfList =
@@ -217,8 +204,6 @@ public class ReportsService {
         cal.setTime(monthYear);
         cal.set(Calendar.DAY_OF_MONTH,
             cal.getActualMaximum(Calendar.DAY_OF_MONTH));
-        System.out
-            .println("StartEndDate.main() === endDate = " + cal.getTime());
         return cal.getTime();
     }
 
@@ -227,8 +212,6 @@ public class ReportsService {
         cal.setTime(monthYear);
         cal.set(Calendar.DAY_OF_MONTH,
             cal.getActualMinimum(Calendar.DAY_OF_MONTH));
-        System.out
-            .println("StartEndDate.main() === startDate = " + cal.getTime());
         return cal.getTime();
     }
 

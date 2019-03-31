@@ -79,7 +79,7 @@ public final class EntityDtoConverter {
         school.setId(schoolDto.getId());
         school.setMaxClassGrade(schoolDto.getMaxClassGrade());
         school.setName(schoolDto.getName());
-        school.setCity(schoolDto.getCity());
+        school.setCity(schoolDto.getCity().toUpperCase());
         school.setPincode(schoolDto.getPincode());
         return school;
     }

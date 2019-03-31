@@ -28,7 +28,7 @@ public class PerformanceController {
     
     @GetMapping(value="/welcome")
     public ResponseEntity<String> welcomePerformance() {
-        System.out.println("PerformanceController.welcomePerformance() Welcome");
+        System.out.println("Welcome");
         return new ResponseEntity<String>("successful", HttpStatus.OK);
     }
     
@@ -36,7 +36,6 @@ public class PerformanceController {
     public ResponseEntity<PerformanceParamDTO> getPerformanceByGroup(
         @PathVariable int groupId, @RequestParam String fromDate,
         @RequestParam String toDate) {
-        System.out.println("PerformanceController.getPerformanceByGroup()");
         Date from = null;
         Date to = null;
         try {
@@ -59,7 +58,6 @@ public class PerformanceController {
     public ResponseEntity<PerformanceParamDTO> getPerformanceByStudent(
         @PathVariable int studentId, @RequestParam String fromDate,
         @RequestParam String toDate) {
-        System.out.println("PerformanceController.getPerformanceByStudent()");
         Date from = null;
         Date to = null;
         try {
