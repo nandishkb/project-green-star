@@ -60,5 +60,9 @@ public class PerformanceDao {
         List<PerformanceParam> list = perfRepo.findByClsAndDateBetween(classId, from, to, Sort.by("group.name"));
         return list;
     }
+    
+    public PerformanceParam getPerformanceByStudentAndByDate(int studentId, Date date) {
+        return perfRepo.findOneByStudentAndDate(studentId, date);
+    }
 
 }

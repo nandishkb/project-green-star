@@ -1,6 +1,5 @@
 package com.outreach.greenstar.controller;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.outreach.greenstar.dto.City;
 import com.outreach.greenstar.service.SchoolService;
 
 @RestController
@@ -21,8 +21,8 @@ public class CityController {
     private SchoolService schoolService;
     
     @GetMapping(value="", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<String>> getCities() {
-        Set<String> listOfCities = schoolService.getAllCities(); 
+    public ResponseEntity<Set<City>> getCities() {
+        Set<City> listOfCities = schoolService.getAllCities(); 
         return new ResponseEntity<>(listOfCities, HttpStatus.OK);
     }
 }

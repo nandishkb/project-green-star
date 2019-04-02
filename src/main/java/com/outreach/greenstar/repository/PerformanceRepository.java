@@ -35,4 +35,7 @@ public interface PerformanceRepository
     @Query("select p from PerformanceParam p where p.cls.id=:id and p.date between :from and :to")
     List<PerformanceParam> findByClsAndDateBetween(int id, Date from, Date to, Sort sort);
     
+    @Query("select p from PerformanceParam p where p.student.id=:studentId and p.date=:date")
+    PerformanceParam findOneByStudentAndDate(int studentId, Date date);
+    
 }

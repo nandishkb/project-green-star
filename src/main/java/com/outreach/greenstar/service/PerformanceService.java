@@ -1,6 +1,9 @@
 package com.outreach.greenstar.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import com.outreach.greenstar.dao.ClassDao;
 import com.outreach.greenstar.dao.GroupDao;
 import com.outreach.greenstar.dao.PerformanceDao;
 import com.outreach.greenstar.dao.StudentDao;
+import com.outreach.greenstar.dto.PerformanceDTO;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
 import com.outreach.greenstar.entities.Cls;
 import com.outreach.greenstar.entities.Group;
@@ -75,8 +79,20 @@ public class PerformanceService {
         return null;
     }
 
-    public PerformanceParamDTO updatePerformanceParam(PerformanceParamDTO param) {
-        
+    public PerformanceParamDTO updatePerformanceParam(List<PerformanceDTO> param) {
+        for (Iterator<PerformanceDTO> iterator = param.iterator(); iterator.hasNext();) {
+            PerformanceDTO pDto = (PerformanceDTO) iterator.next();
+            Date date = new Date(); 
+            try {
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(pDto.getDate());
+            } catch (ParseException e) {
+            }
+            PerformanceParam pParam = performanceDao.getPerformanceByStudentAndByDate(pDto.getStudentId(), date);
+            if (pParam != null) {
+                
+            }
+            System.out.println("PerformanceService.updatePerformanceParam() "+pParam);
+        }
         return null;
     }
 

@@ -2,7 +2,9 @@ package com.outreach.greenstar.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.outreach.greenstar.dto.PerformanceDTO;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
 import com.outreach.greenstar.service.PerformanceService;
 
@@ -28,8 +31,7 @@ public class PerformanceController {
     
     @GetMapping(value="/welcome")
     public ResponseEntity<String> welcomePerformance() {
-        System.out.println("Welcome");
-        return new ResponseEntity<String>("successful", HttpStatus.OK);
+        return new ResponseEntity<>("Welcome", HttpStatus.OK);
     }
     
     @GetMapping(value = "/group/{groupId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -90,9 +92,9 @@ public class PerformanceController {
     }
     
     @PostMapping(value="", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PerformanceParamDTO> updatePerformance(@RequestBody PerformanceParamDTO param) {
-        PerformanceParamDTO failed = performanceService.updatePerformanceParam(param);
-        return new ResponseEntity<>(failed, HttpStatus.OK);
+    public ResponseEntity<String> updatePerformance(@RequestBody List<PerformanceDTO> param) {
+        performanceService.updatePerformanceParam(param);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
     
     
