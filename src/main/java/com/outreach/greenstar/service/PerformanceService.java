@@ -2,6 +2,7 @@ package com.outreach.greenstar.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -79,21 +80,33 @@ public class PerformanceService {
         return null;
     }
 
-    public PerformanceParamDTO updatePerformanceParam(List<PerformanceDTO> param) {
+    public List<PerformanceDTO> updatePerformanceParam(List<PerformanceDTO> param) {
+        List<PerformanceDTO> successList = new ArrayList<>();
         for (Iterator<PerformanceDTO> iterator = param.iterator(); iterator.hasNext();) {
-            PerformanceDTO pDto = (PerformanceDTO) iterator.next();
+            PerformanceDTO pDto = iterator.next();
             Date date = new Date(); 
             try {
                 date = new SimpleDateFormat("yyyy-MM-dd").parse(pDto.getDate());
             } catch (ParseException e) {
             }
             PerformanceParam pParam = performanceDao.getPerformanceByStudentAndByDate(pDto.getStudentId(), date);
-            if (pParam != null) {
-                
+            if (pParam == null) {
+                pParam = new PerformanceParam();
+                Student student = studentDao.getStudentById(pDto.getStudentId());
+                pParam.setStudent(student);
+                pParam.setCls(student.getCls());
+                pParam.setDate(date);
+                pParam.setGroup(student.getGroup());
+                pParam.setSection(student.getSection());
             }
-            System.out.println("PerformanceService.updatePerformanceParam() "+pParam);
+            pParam.setPresent(pDto.isAttendance());
+            pParam.setDisciplined(pDto.isDiscipline());
+            pParam.setHWDone(pDto.isHomeWork());
+            performanceDao.saveOrUpdate(pParam);
+            pDto.setStudentName(pParam.getStudent().getName());
+            successList.add(pDto);
         }
-        return null;
+        return successList;
     }
 
 

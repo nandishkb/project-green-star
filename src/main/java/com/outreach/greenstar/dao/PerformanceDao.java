@@ -3,6 +3,8 @@ package com.outreach.greenstar.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -63,6 +65,11 @@ public class PerformanceDao {
     
     public PerformanceParam getPerformanceByStudentAndByDate(int studentId, Date date) {
         return perfRepo.findOneByStudentAndDate(studentId, date);
+    }
+
+    @Transactional
+    public void saveOrUpdate(PerformanceParam pParam) {
+        perfRepo.saveAndFlush(pParam);
     }
 
 }

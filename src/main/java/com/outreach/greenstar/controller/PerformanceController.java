@@ -92,9 +92,9 @@ public class PerformanceController {
     }
     
     @PostMapping(value="", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> updatePerformance(@RequestBody List<PerformanceDTO> param) {
-        performanceService.updatePerformanceParam(param);
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+    public ResponseEntity<List<PerformanceDTO>> updatePerformance(@RequestBody List<PerformanceDTO> param) {
+        List<PerformanceDTO> list = performanceService.updatePerformanceParam(param);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
     
