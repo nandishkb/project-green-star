@@ -111,15 +111,19 @@ public class StudentService {
             throw new SectionNotFoundException("Invalid section Id = "+studentDto.getSectionId());
         }
         
-        Group group = groupDao.getGroupById(studentDto.getGroupId());
-        if (group == null) {
-            throw new GroupNotFoundException("Invalid group Id = "+studentDto.getGroupId());
+        Group group = null;
+        if (studentDto.getGroupId() > 0) {
+        
+            group = groupDao.getGroupById(studentDto.getGroupId());
+            if (group == null) {
+                throw new GroupNotFoundException("Invalid group Id = "+studentDto.getGroupId());
+            }
+            student.setGroup(group);
         }
         
         student.setSchool(school);
         student.setCls(cls);
         student.setSection(section);
-        student.setGroup(group);
         student = studentDao.createOrUpdateStudent(student);
         return EntityDtoConverter.getStudentDTO(student);
     }

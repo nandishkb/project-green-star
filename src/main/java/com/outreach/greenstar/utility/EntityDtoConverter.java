@@ -170,7 +170,10 @@ public final class EntityDtoConverter {
             listOfData.add(perfParam.isPresent() + "");//Attendance
             listOfData.add(perfParam.isHWDone() + "");//Homework
             listOfData.add(perfParam.isDisciplined() + "");//Discipline
-            listOfData.add(perfParam.getGroup().getName());//GroupName
+            Group group = perfParam.getGroup();
+            if (group != null) {
+                listOfData.add(group.getName());//GroupName
+            }
             performanceData.add(listOfData);
         }
         perfDTO.setPerformanceData(performanceData);
@@ -189,6 +192,7 @@ public final class EntityDtoConverter {
         Group group = student.getGroup();
         if (group != null) {
             studentDTO.setGroupId(group.getId());
+            studentDTO.setGroupName(student.getGroup().getName());
         } else {
             studentDTO.setGroupId(-1);
         }
@@ -207,7 +211,6 @@ public final class EntityDtoConverter {
         studentDTO.setSchoolName(student.getSchool().getName());
         studentDTO.setClsName(getClassNameRoman(student.getCls().getGrade()));
         studentDTO.setSectionName(student.getSection().getName());
-        studentDTO.setGroupName(student.getGroup().getName());
         studentDTO.setGender(student.getGender());
         //
         return studentDTO;

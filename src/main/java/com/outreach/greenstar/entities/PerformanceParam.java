@@ -54,6 +54,6 @@ public class PerformanceParam {
     @ManyToOne(cascade=CascadeType.ALL)
     private Section section;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(optional=true, cascade=CascadeType.ALL)
     private Group group;
 }
