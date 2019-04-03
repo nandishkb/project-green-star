@@ -14,6 +14,7 @@ import com.outreach.greenstar.dao.StudentDao;
 import com.outreach.greenstar.dto.ClsDTO;
 import com.outreach.greenstar.dto.GroupDTO;
 import com.outreach.greenstar.dto.HolidayDTO;
+import com.outreach.greenstar.dto.LabelEntity;
 import com.outreach.greenstar.dto.PerformanceParamDTO;
 import com.outreach.greenstar.dto.PrivilagesDTO;
 import com.outreach.greenstar.dto.RoleDTO;
@@ -112,12 +113,12 @@ public final class EntityDtoConverter {
         groupDto.setSchoolName(group.getSection().getCls().getSchool().getName());
         List<Student> studentsByGroup = studentDao.getStudentsByGroup(group.getId());
         List<Integer> studentIds = new ArrayList<>();
-        List<String> studentNames = new ArrayList<>();
+        List<LabelEntity> studentNames = new ArrayList<>();
         for (Iterator<Student> iterator = studentsByGroup.iterator(); iterator
             .hasNext();) {
             Student student = iterator.next();
             studentIds.add(student.getId());
-            studentNames.add(student.getName());
+            studentNames.add(new LabelEntity(student.getName()));
         }
         groupDto.setStudentIds(studentIds);
         groupDto.setStudentNames(studentNames);

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.outreach.greenstar.dao.SchoolDao;
-import com.outreach.greenstar.dto.City;
+import com.outreach.greenstar.dto.LabelEntity;
 import com.outreach.greenstar.dto.SchoolDTO;
 import com.outreach.greenstar.entities.School;
 import com.outreach.greenstar.exeption.SchoolNotFoundException;
@@ -57,12 +57,12 @@ public class SchoolService {
         schoolDao.deleteSchool(school);
     }
 
-    public Set<City> getAllCities() {
+    public Set<LabelEntity> getAllCities() {
         List<String> allCities = schoolDao.getAllCities();
-        Set<City> cities = new LinkedHashSet<>();
+        Set<LabelEntity> cities = new LinkedHashSet<>();
         for(int i = 0 ; i < allCities.size() ; ++i) {
             String cityStr = allCities.get(i).toUpperCase().trim();
-            City city = new City();
+            LabelEntity city = new LabelEntity();
             city.setLabel(cityStr);
             cities.add(city);
         }
